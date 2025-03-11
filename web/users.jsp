@@ -34,7 +34,7 @@
                         Class.forName("com.mysql.cj.jdbc.Driver");
                         Connection conn = DriverManager.getConnection(url, uname, passwd);
 
-                        String query = "SELECT id, fullname, username, email, address, mobileno, nic, gender FROM user ORDER BY id DESC";
+                        String query = "SELECT id, fullname, username, email, address, mobileno, nic, gender FROM users ORDER BY id DESC";
                         PreparedStatement stmt = conn.prepareStatement(query);
                         ResultSet rs = stmt.executeQuery();
 

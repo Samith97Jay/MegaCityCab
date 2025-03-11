@@ -16,7 +16,7 @@
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection conn = DriverManager.getConnection(url, uname, passwd);
 
-        String query = "UPDATE user SET fullname=?, username=?, email=?, address=?, mobileno=?, nic=?, gender=? WHERE id=?";
+        String query = "UPDATE users SET fullname=?, username=?, email=?, address=?, mobileno=?, nic=?, gender=? WHERE id=?";
         PreparedStatement stmt = conn.prepareStatement(query);
 
         stmt.setString(1, fullname);

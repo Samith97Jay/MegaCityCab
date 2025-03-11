@@ -10,7 +10,7 @@
         Class.forName("com.mysql.cj.jdbc.Driver");
         Connection conn = DriverManager.getConnection(url, uname, passwd);
 
-        String query = "SELECT * FROM user WHERE id=?";
+        String query = "SELECT * FROM users WHERE id=?";
         PreparedStatement stmt = conn.prepareStatement(query);
         stmt.setInt(1, Integer.parseInt(id));
         ResultSet rs = stmt.executeQuery();

@@ -24,7 +24,7 @@
             </div>
             <button type="submit" class="btn btn-danger" a href="deleteUser.jsp">Delete User</button>
          
-            <button class="btn btn-primary" a href="users.jsp">Cancel</button>
+           <button type="button" class="btn btn-primary" onclick="window.location.href='users.jsp'">Cancel</button>
         </form>
     </div>
 
@@ -32,13 +32,19 @@
     <%
         String userId = request.getParameter("userId");
         if (userId != null && !userId.isEmpty()) {
+            
+            
             try {
+                
+                
                 String url = "jdbc:mysql://localhost:3306/megacitycab";
                 String uname = "root";
                 String passwd = "1234";
                 
                 Class.forName("com.mysql.cj.jdbc.Driver");
                 Connection conn = DriverManager.getConnection(url, uname, passwd);
+                
+                
                 
                 String query = "DELETE FROM user WHERE id = ?";
                 PreparedStatement stmt = conn.prepareStatement(query);

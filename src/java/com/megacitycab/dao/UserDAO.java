@@ -22,7 +22,7 @@ public class UserDAO {
     
      // Create a new user
      public boolean registerUser(User user) {
-        String query = "INSERT INTO user (fullname, username, email, password, address, mobileno, nic, gender) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO users (fullname, username, email, password, address, mobileno, nic, gender) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -47,7 +47,7 @@ public class UserDAO {
      // Retrieve all users
     public List<User> getAllUsers() {
         List<User> users = new ArrayList<>();
-        String query = "SELECT * FROM user";
+        String query = "SELECT * FROM users";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query);
@@ -74,7 +74,7 @@ public class UserDAO {
 
     // Update user
     public boolean updateUser(User user) {
-        String query = "UPDATE user SET fullname=?, username=?, email=?, password=?, address=?, mobileno=?, nic=?, gender=? WHERE id=?";
+        String query = "UPDATE users SET fullname=?, username=?, email=?, password=?, address=?, mobileno=?, nic=?, gender=? WHERE id=?";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {
@@ -99,7 +99,7 @@ public class UserDAO {
 
     // Delete user
     public boolean deleteUser(int userId) {
-        String query = "DELETE FROM user WHERE id=?";
+        String query = "DELETE FROM users WHERE id=?";
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(query)) {

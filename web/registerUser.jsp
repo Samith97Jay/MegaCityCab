@@ -21,7 +21,7 @@
         Connection conn = DriverManager.getConnection(url, uname, passwd);
 
         // Insert query with auto-incremented ID
-        String query = "INSERT INTO user (fullname, username, email, password, address, mobileno, nic, gender) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+        String query = "INSERT INTO users (fullname, username, email, password, address, mobileno, nic, gender) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement stmt = conn.prepareStatement(query);
 
         // Set values for the prepared statement

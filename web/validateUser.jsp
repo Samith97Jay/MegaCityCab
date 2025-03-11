@@ -15,7 +15,7 @@
         Connection conn = DriverManager.getConnection(url, uname, passwd);
 
         // Check if the email and password match
-        String query = "SELECT email, fullname FROM user WHERE email = ? AND password = ?";
+        String query = "SELECT email, fullname FROM users WHERE email = ? AND password = ?";
         PreparedStatement stmt = conn.prepareStatement(query);
         stmt.setString(1, username);
         stmt.setString(2, password);
