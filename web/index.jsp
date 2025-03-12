@@ -16,8 +16,8 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="index.jsp">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="bookCar.jsp">Book a Car</a></li>
-                    <li class="nav-item"><a class="nav-link" href="viewBookings.jsp">View Bookings</a></li>
+                    <li class="nav-item"><a class="nav-link" href="booking.jsp">Book a Car</a></li>
+                    <li class="nav-item"><a class="nav-link" href="viewbookings.jsp">View Bookings</a></li>
                     <li class="nav-item"><a class="nav-link" href="login.jsp">Login</a></li>
                     <li class="nav-item"><a class="nav-link" href="signup.jsp">Sign Up</a></li>
                 </ul>
@@ -28,7 +28,7 @@
     <div class="container mt-5 text-center">
         <h1>Welcome to the Mega City Cab</h1>
         <p class="lead">Book your preferred car quickly and easily!</p>
-        <a href="bookCar.jsp" class="btn btn-primary">Book Now</a>
+        <a href="booking.jsp" class="btn btn-primary">Book Now</a>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

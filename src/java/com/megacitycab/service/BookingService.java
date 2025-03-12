@@ -20,7 +20,7 @@ public class BookingService {
         return instance;
     }
 
-    public boolean addBooking(Booking booking) {
+    public boolean addBooking(Booking booking) throws ClassNotFoundException {
         try {
             boolean added = BookingDAO.getInstance().addBooking(booking);
             if (!added) {
@@ -34,7 +34,7 @@ public class BookingService {
         }
     }
 
-    public Booking getBooking(String bookingNumber) {
+    public Booking getBooking(String bookingNumber) throws ClassNotFoundException {
         try {
             return BookingDAO.getInstance().getBooking(bookingNumber);
         } catch (SQLException ex) {
@@ -44,7 +44,7 @@ public class BookingService {
         }
     }
 
-    public List<Booking> getAllBookings() {
+    public List<Booking> getAllBookings() throws ClassNotFoundException {
         try {
             return BookingDAO.getInstance().getAllBookings();
         } catch (SQLException ex) {

@@ -1,13 +1,21 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.megacitycab.service;
 
 import com.megacitycab.dao.DriverDAO;
 import com.megacitycab.model.Driver;
+import java.sql.SQLException;
 
 /**
- * Service layer for Driver-related business logic.
+ *
+ * @author OZT00090
  */
 public class DriverService {
-
+    
+    
     private DriverDAO driverDAO;
 
     public DriverService() {
@@ -20,8 +28,9 @@ public class DriverService {
      * @param driver the driver object to register.
      * @return true if registration was successful; false otherwise.
      */
-    public boolean registerDriver(Driver driver) {
+    public boolean registerDriver(Driver driver) throws SQLException, ClassNotFoundException {
         // Additional business logic can be added here (e.g., validations)
         return driverDAO.insertDriver(driver);
     }
+    
 }

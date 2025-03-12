@@ -1,6 +1,6 @@
 package com.megacitycab.service;
 
-import com.megacitycab.dao.DBConnectionManager;
+import com.megacitycab.util.DBConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -18,7 +18,7 @@ public class AuthenticationService {
         return instance;
     }
 
-    public boolean authenticate(String username, String password) {
+    public boolean authenticate(String username, String password) throws SQLException, ClassNotFoundException {
         // Trim input to remove accidental spaces
         username = username != null ? username.trim() : "";
         password = password != null ? password.trim() : "";
@@ -28,7 +28,7 @@ public class AuthenticationService {
 
         System.out.println("AuthenticationService: Trying to authenticate user: '" + username + "'");
 
-        try (Connection conn = DBConnectionManager.getConnection();
+        try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, username);

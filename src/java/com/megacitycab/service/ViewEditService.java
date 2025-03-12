@@ -1,9 +1,9 @@
 package com.megacitycab.service;
 
-import com.megacitycab.dao.CarRegistrationDAO;
+import com.megacitycab.dao.VehicleDAO;
 import com.megacitycab.dao.CustomerDAO;
 import com.megacitycab.dao.DriverDAO;
-import com.megacitycab.model.Car;
+import com.megacitycab.model.Vehicle;
 import com.megacitycab.model.Customer;
 import com.megacitycab.model.Driver;
 
@@ -11,13 +11,13 @@ public class ViewEditService {
 
     private CustomerDAO customerDAO;
     private DriverDAO driverDAO;
-    private CarRegistrationDAO carDAO;
+    private VehicleDAO vehicleDAO;
     private CustomerService customerService;
 
     public ViewEditService() {
         customerDAO = CustomerDAO.getInstance();
         driverDAO = new DriverDAO();
-        carDAO = new CarRegistrationDAO();
+        vehicleDAO = new VehicleDAO();
         customerService = new CustomerService();
     }
 
@@ -48,9 +48,9 @@ public class ViewEditService {
         }
     }
 
-    public Car getCar(String vehicleRegId) {
+    public Vehicle getVehicle(String vehicleRegId) {
         try {
-            return carDAO.getCar(vehicleRegId);
+            return vehicleDAO.getVehicle(vehicleRegId);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -75,9 +75,9 @@ public class ViewEditService {
         }
     }
 
-    public boolean updateCar(Car car) {
+    public boolean updateVehicle(Vehicle vehicle) {
         try {
-            return carDAO.updateVehicle(car);
+            return vehicleDAO.updateVehicle(vehicle);
         } catch (Exception e) {
             e.printStackTrace();
             return false;

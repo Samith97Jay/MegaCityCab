@@ -1,14 +1,25 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.megacitycab.service;
 
-import com.megacitycab.dao.CarRegistrationDAO;
-import com.megacitycab.model.Car;
+import com.megacitycab.dao.CustomerDAO;
+import com.megacitycab.model.Vehicle;
+import com.megacitycab.dao.VehicleDAO;
+import java.sql.SQLException;
 
-public class CarRegistrationService {
+/**
+ *
+ * @author OZT00090
+ */
+public class VehicleService {
+    
+   private VehicleDAO vehicledao;
 
-    private CarRegistrationDAO dao;
-
-    public CarRegistrationService() {
-        dao = new CarRegistrationDAO();
+    public VehicleService() {
+        vehicledao = new VehicleDAO();
     }
 
     /**
@@ -24,8 +35,8 @@ public class CarRegistrationService {
      * @return true if the vehicle was registered successfully.
      */
     public boolean registerVehicle(String vehicleType, String vehicleRegId, String licensePlate,
-                                   String model, String brand, String color, int seatingCapacity) {
-        int result = dao.insertVehicle(vehicleType, vehicleRegId, licensePlate, model, brand, color, seatingCapacity);
+                                   String model, String brand, String color, int seatingCapacity) throws ClassNotFoundException, SQLException {
+        int result = vehicledao.insertVehicle(vehicleType, vehicleRegId, licensePlate, model, brand, color, seatingCapacity);
         return result > 0;
     }
 
@@ -33,11 +44,11 @@ public class CarRegistrationService {
      * Retrieves an available vehicle based on the provided vehicle type.
      *
      * @param vehicleType The type of the vehicle to search for.
-     * @return A Car object if found, otherwise null.
+     * @return A Vehicle object if found, otherwise null.
      */
-    public Car getAvailableVehicle(String vehicleType) {
+    public Vehicle getAvailableVehicle(String vehicleType) {
         try {
-            return dao.getAvailableVehicle(vehicleType);
+            return vehicledao.getAvailableVehicle(vehicleType);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
@@ -49,14 +60,15 @@ public class CarRegistrationService {
      * ensuring that the vehicle is not already booked.
      *
      * @param vehicleType The type of the vehicle to search for.
-     * @return A Car object if an available (not booked) vehicle is found; otherwise, null.
+     * @return A Vehicle object if an available (not booked) vehicle is found; otherwise, null.
      */
-    public Car getAvailableNotBookedVehicle(String vehicleType) {
+    public Vehicle getAvailableNotBookedVehicle(String vehicleType) {
         try {
-            return dao.getAvailableNotBookedVehicle(vehicleType);
+            return vehicledao.getAvailableNotBookedVehicle(vehicleType);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
         }
     }
+    
 }

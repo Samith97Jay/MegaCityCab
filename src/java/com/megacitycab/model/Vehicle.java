@@ -1,18 +1,19 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.megacitycab.model;
 
 import java.util.Objects;
 
 /**
- * Represents a vehicle in the Mega City Cab system.
- * 
- * This class is designed using the Builder pattern to enforce immutability and
- * provide a clear, flexible construction process for Vehicle objects.
- * 
- * Adheres to the Single Responsibility Principle by solely representing vehicle data.
+ *
+ * @author OZT00090
  */
-public class Car {
-    // Core attributes for a Vehicle
-    private final String vehicleType;     // Type of the vehicle (Car, SUV, Van, Bus)
+public class Vehicle {
+    
+     private final String vehicleType;     // Type of the vehicle (Vehicle, SUV, Van, Bus)
     private final String vehicleRegId;    // Auto-generated unique registration ID
     private final String licensePlate;    // License plate number
     private final String model;           // Model of the vehicle
@@ -25,7 +26,7 @@ public class Car {
      *
      * @param builder the Builder instance containing vehicle data.
      */
-    private Car(Builder builder) {
+    private Vehicle(Builder builder) {
         this.vehicleType = builder.vehicleType;
         this.vehicleRegId = builder.vehicleRegId;
         this.licensePlate = builder.licensePlate;
@@ -66,7 +67,7 @@ public class Car {
 
     @Override
     public String toString() {
-        return "Car{" +
+        return "Vehicle{" +
                 "vehicleType='" + vehicleType + '\'' +
                 ", vehicleRegId='" + vehicleRegId + '\'' +
                 ", licensePlate='" + licensePlate + '\'' +
@@ -85,16 +86,16 @@ public class Car {
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
-        if (!(obj instanceof Car)) return false;
-        Car other = (Car) obj;
+        if (!(obj instanceof Vehicle)) return false;
+        Vehicle other = (Vehicle) obj;
         return Objects.equals(this.vehicleRegId, other.vehicleRegId);
     }
 
     /**
-     * Builder class for constructing Car instances.
+     * Builder class for constructing Vehicle instances.
      * 
      * This follows the Builder design pattern, providing a clear and flexible
-     * approach to constructing immutable Car objects.
+     * approach to constructing immutable Vehicle objects.
      */
     public static class Builder {
         // Required attributes
@@ -151,12 +152,13 @@ public class Car {
         }
 
         /**
-         * Builds the Car instance with the provided values.
+         * Builds the Vehicle instance with the provided values.
          *
-         * @return a new Car object.
+         * @return a new Vehicle object.
          */
-        public Car build() {
-            return new Car(this);
+        public Vehicle build() {
+            return new Vehicle(this);
         }
     }
+    
 }

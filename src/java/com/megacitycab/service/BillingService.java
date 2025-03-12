@@ -1,6 +1,6 @@
 package com.megacitycab.service;
 
-import com.megacitycab.dao.DBConnectionManager;
+import com.megacitycab.util.DBConnection;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -121,11 +121,11 @@ public class BillingService {
      * @param bookingNumber the booking number to look up
      * @return a BillingInfo object, or null if not found
      */
-    public BillingInfo getBookingDetails(String bookingNumber) {
+    public BillingInfo getBookingDetails(String bookingNumber) throws SQLException, ClassNotFoundException {
         String sql = "SELECT bookingNumber, pickupLocation, destination FROM bookings WHERE bookingNumber = ?";
         BillingInfo billingInfo = null;
 
-        try (Connection conn = DBConnectionManager.getConnection();
+        try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, bookingNumber);
@@ -154,11 +154,11 @@ public class BillingService {
      * @param manualDistance the manually provided distance in miles.
      * @return a fully populated BillingInfo object, or null if the booking is not found
      */
-    public BillingInfo calculateBill(String bookingNumber, double manualDistance) {
+    public BillingInfo calculateBill(String bookingNumber, double manualDistance) throws SQLException, ClassNotFoundException {
         String sql = "SELECT bookingNumber, pickupLocation, destination FROM bookings WHERE bookingNumber = ?";
         BillingInfo billingInfo = null;
 
-        try (Connection conn = DBConnectionManager.getConnection();
+        try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, bookingNumber);

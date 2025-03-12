@@ -1,3 +1,8 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.megacitycab.service;
 
 import com.megacitycab.dao.CustomerDAO;
@@ -5,10 +10,10 @@ import com.megacitycab.model.Customer;
 import java.sql.SQLException;
 
 /**
- * Service class for handling business logic related to Customer.
+ *
+ * @author OZT00090
  */
 public class CustomerService {
-
     private CustomerDAO customerDAO;
 
     public CustomerService() {
@@ -22,7 +27,7 @@ public class CustomerService {
      * @return true if added successfully; false otherwise.
      * @throws SQLException if a database error occurs.
      */
-    public boolean addCustomer(Customer customer) throws SQLException {
+    public boolean addCustomer(Customer customer) throws SQLException, ClassNotFoundException {
         return customerDAO.addCustomer(customer);
     }
 
@@ -33,7 +38,7 @@ public class CustomerService {
      * @return the Customer object if found; otherwise, null.
      * @throws SQLException if a database error occurs.
      */
-    public Customer getCustomer(String registrationNumber) throws SQLException {
+    public Customer getCustomer(String registrationNumber) throws SQLException, ClassNotFoundException {
         return customerDAO.getCustomer(registrationNumber);
     }
 
@@ -44,7 +49,7 @@ public class CustomerService {
      * @return the Customer object if found; otherwise, null.
      * @throws SQLException if a database error occurs.
      */
-    public Customer getCustomerByNic(String nic) throws SQLException {
+    public Customer getCustomerByNic(String nic) throws SQLException, ClassNotFoundException {
         return customerDAO.getCustomerByNic(nic);
     }
     
@@ -60,8 +65,7 @@ public class CustomerService {
     }
     
     
-    public Customer getCustomerByRegOrNic(String input) throws SQLException {
+    public Customer getCustomerByRegOrNic(String input) throws SQLException, ClassNotFoundException {
     return CustomerDAO.getInstance().getCustomerByRegOrNic(input);
 }
-
 }
