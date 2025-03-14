@@ -7,14 +7,14 @@ import com.megacitycab.model.Vehicle;
 import com.megacitycab.model.Customer;
 import com.megacitycab.model.Driver;
 
-public class ViewEditService {
+public class RetriveService {
 
     private CustomerDAO customerDAO;
     private DriverDAO driverDAO;
     private VehicleDAO vehicleDAO;
     private CustomerService customerService;
 
-    public ViewEditService() {
+    public RetriveService() {
         customerDAO = CustomerDAO.getInstance();
         driverDAO = new DriverDAO();
         vehicleDAO = new VehicleDAO();
@@ -48,9 +48,9 @@ public class ViewEditService {
         }
     }
 
-    public Vehicle getVehicle(String vehicleRegId) {
+    public Vehicle getVehicle(String vehicleId) {
         try {
-            return vehicleDAO.getVehicle(vehicleRegId);
+            return vehicleDAO.getVehicle(vehicleId);
         } catch (Exception e) {
             e.printStackTrace();
             return null;

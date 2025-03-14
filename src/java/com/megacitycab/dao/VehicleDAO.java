@@ -18,21 +18,21 @@ import com.megacitycab.util.DBConnection;
  */
 public class VehicleDAO {
     
-      public int insertVehicle(String vehicleType, String vehicleRegId, String licensePlate,
-                             String model, String brand, String color, int seatingCapacity) throws SQLException, ClassNotFoundException {
+      public int insertVehicle(String vehicleType, String vehicleId, String licensePlate,
+                             String vehicleModel, String vehicleBrand, String color, int seat) throws SQLException, ClassNotFoundException {
         int rowsAffected = 0;
-        String sql = "INSERT INTO vehicles (vehicleType, vehicleRegId, licensePlate, model, brand, color, seatingCapacity) "
+        String sql = "INSERT INTO vehicles (vehicleType, vehicleId, licensePlate, vehicleModel, vehicleBrand, color, seat) "
                    + "VALUES (?, ?, ?, ?, ?, ?, ?)";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
              
             stmt.setString(1, vehicleType);
-            stmt.setString(2, vehicleRegId);
+            stmt.setString(2, vehicleId);
             stmt.setString(3, licensePlate);
-            stmt.setString(4, model);
-            stmt.setString(5, brand);
+            stmt.setString(4, vehicleModel);
+            stmt.setString(5, vehicleBrand);
             stmt.setString(6, color);
-            stmt.setInt(7, seatingCapacity);
+            stmt.setInt(7, seat);
             
             rowsAffected = stmt.executeUpdate();
         } catch (SQLException e) {
@@ -43,23 +43,23 @@ public class VehicleDAO {
     }
     
     /**
-     * Retrieves a vehicle from the database based on vehicleRegId.
+     * Retrieves a vehicle from the database based on vehicleId.
      */
-    public Vehicle getVehicle(String vehicleRegId) throws Exception {
-        String sql = "SELECT vehicleType, vehicleRegId, licensePlate, model, brand, color, seatingCapacity FROM vehicles WHERE vehicleRegId = ?";
+    public Vehicle getVehicle(String vehicleId) throws Exception {
+        String sql = "SELECT vehicleType, vehicleId, licensePlate, vehicleModel, vehicleBrand, color, seat FROM vehicles WHERE vehicleId = ?";
         Vehicle vehicle = null;
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, vehicleRegId);
+            stmt.setString(1, vehicleId);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    vehicle = new Vehicle.Builder(rs.getString("vehicleType"), rs.getString("vehicleRegId"))
+                    vehicle = new Vehicle.Builder(rs.getString("vehicleType"), rs.getString("vehicleId"))
                             .licensePlate(rs.getString("licensePlate"))
-                            .model(rs.getString("model"))
-                            .brand(rs.getString("brand"))
+                            .vehicleModel(rs.getString("vehicleModel"))
+                            .vehicleBrand(rs.getString("vehicleBrand"))
                             .color(rs.getString("color"))
-                            .seatingCapacity(rs.getInt("seatingCapacity"))
+                            .seat(rs.getInt("seat"))
                             .build();
                 }
             }
@@ -71,17 +71,17 @@ public class VehicleDAO {
      * Updates an existing vehicle record.
      */
     public boolean updateVehicle(Vehicle vehicle) throws Exception {
-        String sql = "UPDATE vehicles SET vehicleType = ?, licensePlate = ?, model = ?, brand = ?, color = ?, seatingCapacity = ? WHERE vehicleRegId = ?";
+        String sql = "UPDATE vehicles SET vehicleType = ?, licensePlate = ?, vehicleModel = ?, vehicleBrand = ?, color = ?, seat = ? WHERE vehicleId = ?";
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, vehicle.getVehicleType());
             stmt.setString(2, vehicle.getLicensePlate());
-            stmt.setString(3, vehicle.getModel());
-            stmt.setString(4, vehicle.getBrand());
+            stmt.setString(3, vehicle.getVehicleModel());
+            stmt.setString(4, vehicle.getVehicleBrand());
             stmt.setString(5, vehicle.getColor());
-            stmt.setInt(6, vehicle.getSeatingCapacity());
-            stmt.setString(7, vehicle.getVehicleRegId());
+            stmt.setInt(6, vehicle.getSeat());
+            stmt.setString(7, vehicle.getVehicleId());
 
             int rowsUpdated = stmt.executeUpdate();
             return rowsUpdated > 0;
@@ -96,7 +96,7 @@ public class VehicleDAO {
      * @throws Exception
      */
     public Vehicle getAvailableVehicle(String vehicleType) throws Exception {
-        String sql = "SELECT vehicleType, vehicleRegId, licensePlate, model, brand, color, seatingCapacity "
+        String sql = "SELECT vehicleType, vehicleId, licensePlate, vehicleModel, vehicleBrand, color, seat "
                    + "FROM vehicles WHERE vehicleType = ? LIMIT 1";
         Vehicle vehicle = null;
         try (Connection conn = DBConnection.getConnection();
@@ -105,12 +105,12 @@ public class VehicleDAO {
             stmt.setString(1, vehicleType);
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    vehicle = new Vehicle.Builder(rs.getString("vehicleType"), rs.getString("vehicleRegId"))
+                    vehicle = new Vehicle.Builder(rs.getString("vehicleType"), rs.getString("vehicleId"))
                             .licensePlate(rs.getString("licensePlate"))
-                            .model(rs.getString("model"))
-                            .brand(rs.getString("brand"))
+                            .vehicleModel(rs.getString("vehicleModel"))
+                            .vehicleBrand(rs.getString("vehicleBrand"))
                             .color(rs.getString("color"))
-                            .seatingCapacity(rs.getInt("seatingCapacity"))
+                            .seat(rs.getInt("seat"))
                             .build();
                 }
             }
@@ -121,17 +121,17 @@ public class VehicleDAO {
 
     /**
      * Retrieves an available vehicle for the given vehicle type that is not already booked.
-     * The query excludes vehicles whose vehicleRegId exists in the bookings table.
+     * The query excludes vehicles whose vehicleId exists in the bookings table.
      *
      * @param vehicleType The type of the vehicle.
      * @return A Vehicle object if found, otherwise null.
      * @throws Exception
      */
     public Vehicle getAvailableNotBookedVehicle(String vehicleType) throws Exception {
-        String sql = "SELECT vehicleType, vehicleRegId, licensePlate, model, brand, color, seatingCapacity " +
+        String sql = "SELECT vehicleType, vehicleId, licensePlate, vehicleModel, vehicleBrand, color, seat " +
                      "FROM vehicles " +
                      "WHERE vehicleType = ? " +
-                     "AND vehicleRegId NOT IN (SELECT vehicleRegId FROM bookings WHERE vehicleType = ?) " +
+                     "AND vehicleId NOT IN (SELECT vehicleId FROM bookings WHERE vehicleType = ?) " +
                      "LIMIT 1";
         Vehicle vehicle = null;
         try (Connection conn = DBConnection.getConnection();
@@ -142,12 +142,12 @@ public class VehicleDAO {
             
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    vehicle = new Vehicle.Builder(rs.getString("vehicleType"), rs.getString("vehicleRegId"))
+                    vehicle = new Vehicle.Builder(rs.getString("vehicleType"), rs.getString("vehicleId"))
                             .licensePlate(rs.getString("licensePlate"))
-                            .model(rs.getString("model"))
-                            .brand(rs.getString("brand"))
+                            .vehicleModel(rs.getString("vehicleModel"))
+                            .vehicleBrand(rs.getString("vehicleBrand"))
                             .color(rs.getString("color"))
-                            .seatingCapacity(rs.getInt("seatingCapacity"))
+                            .seat(rs.getInt("seat"))
                             .build();
                 }
             }

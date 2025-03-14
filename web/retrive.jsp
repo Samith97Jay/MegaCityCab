@@ -210,7 +210,7 @@
     <h2>Search Record</h2>
     <!-- Search Section -->
     <div class="search-section">
-        <form action="ViewEditServlet" method="get">
+        <form action="ViewEditServlet?" method="get">
             <input type="text" name="searchId" placeholder="Enter ID (e.g., CUS_123, DI456, V789 or NIC)" required />
             <button type="submit">Search</button>
         </form>
@@ -233,9 +233,9 @@
     %>
                 <h2>View/Edit Customer Details</h2>
                 <div class="form-section">
-                    <form action="ViewEditServlet" method="post">
+                    <form action="ViewEditServlet?searchId" method="post">
                         <label>Registration Number</label>
-                        <input type="text" name="registrationNumber" value="<%= customer.getRegistrationNumber() %>" readonly />
+                        <input type="text" name="registrationNumber" value="<%= customer.getCustID() %>" readonly />
                         
                         <label>Customer Name</label>
                         <input type="text" name="customerName" value="<%= customer.getName() %>" required />
@@ -275,7 +275,7 @@
                         <input type="text" name="driverAddress" value="<%= driver.getAddress() %>" required />
                         
                         <label>Assigned Vehicle ID</label>
-                        <input type="text" name="assignedVehicleId" value="<%= driver.getAssignedCarId() %>" required />
+                        <input type="text" name="assignedVehicleId" value="<%= driver.getAssignedVehicleId() %>" required />
                         
                         <button type="submit">Update Driver Details</button>
                     </form>

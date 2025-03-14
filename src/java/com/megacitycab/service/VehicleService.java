@@ -22,30 +22,14 @@ public class VehicleService {
         vehicledao = new VehicleDAO();
     }
 
-    /**
-     * Registers a new vehicle.
-     *
-     * @param vehicleType     The type of the vehicle.
-     * @param vehicleRegId    The vehicle registration ID.
-     * @param licensePlate    The license plate.
-     * @param model           The model of the vehicle.
-     * @param brand           The brand of the vehicle.
-     * @param color           The color of the vehicle.
-     * @param seatingCapacity The seating capacity.
-     * @return true if the vehicle was registered successfully.
-     */
-    public boolean registerVehicle(String vehicleType, String vehicleRegId, String licensePlate,
-                                   String model, String brand, String color, int seatingCapacity) throws ClassNotFoundException, SQLException {
-        int result = vehicledao.insertVehicle(vehicleType, vehicleRegId, licensePlate, model, brand, color, seatingCapacity);
+  
+    public boolean registerVehicle(String vehicleType, String vehicleId, String licensePlate,
+                                   String vehicleModel, String vehicleBrand, String color, int seat) throws ClassNotFoundException, SQLException {
+        int result = vehicledao.insertVehicle(vehicleType, vehicleId, licensePlate, vehicleModel, vehicleBrand, color, seat);
         return result > 0;
     }
 
-    /**
-     * Retrieves an available vehicle based on the provided vehicle type.
-     *
-     * @param vehicleType The type of the vehicle to search for.
-     * @return A Vehicle object if found, otherwise null.
-     */
+
     public Vehicle getAvailableVehicle(String vehicleType) {
         try {
             return vehicledao.getAvailableVehicle(vehicleType);
@@ -55,13 +39,7 @@ public class VehicleService {
         }
     }
     
-    /**
-     * Retrieves an available vehicle based on the provided vehicle type,
-     * ensuring that the vehicle is not already booked.
-     *
-     * @param vehicleType The type of the vehicle to search for.
-     * @return A Vehicle object if an available (not booked) vehicle is found; otherwise, null.
-     */
+
     public Vehicle getAvailableNotBookedVehicle(String vehicleType) {
         try {
             return vehicledao.getAvailableNotBookedVehicle(vehicleType);

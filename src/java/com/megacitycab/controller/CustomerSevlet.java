@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletResponse;
  *
  * @author OZT00090
  */
-@WebServlet("/CustomerRegistrationServlet")
+@WebServlet("/CustomerServlet")
 public class CustomerSevlet extends HttpServlet {
 
     private CustomerService customerService;
@@ -33,31 +33,20 @@ public class CustomerSevlet extends HttpServlet {
         customerService = new CustomerService();
     }
 
-    /**
-     * Handles GET requests to fetch customer details based on a registration number or NIC.
-     * Example URL: /CustomerRegistrationServlet?action=getCustomer&customerRegNo=CUS_88021
-     * or         : /CustomerRegistrationServlet?action=getCustomer&customerRegNo=78454112
-     *
-     * If found, returns JSON like:
-     *   {
-     *     "customerName": "John Doe",
-     *     "telephoneNumber": "0771234567"
-     *   }
-     * If not found, returns an empty JSON object: {}
-     */
+ 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         String action = request.getParameter("action");
         if ("getCustomer".equalsIgnoreCase(action)) {
-            // The parameter can be a registration number (e.g., CUS_88021) or NIC (e.g., 78454112)
-            String input = request.getParameter("customerRegNo");
+            // The parameter can be a cust Id (e.g., CUS_88021) or NIC (e.g., 78454112)
+            String input = request.getParameter("custId");
 
             Customer customer = null;
             try {
-                // Now we look up by either registration number OR NIC:
-                customer = customerService.getCustomerByRegOrNic(input);
+                // Now we look up by either cust Id OR NIC:
+                customer = customerService.getCustomerByCustIdOrNic(input);
             } catch (SQLException e) {
                 e.printStackTrace();
             } catch (ClassNotFoundException ex) {
@@ -72,7 +61,7 @@ public class CustomerSevlet extends HttpServlet {
                 // Manually build JSON (no external libraries)
                 String json = "{"
                         + "\"customerName\":\"" + escapeJson(customer.getName()) + "\","
-                        + "\"telephoneNumber\":\"" + escapeJson(customer.getTelephone()) + "\""
+                        + "\"phoneno\":\"" + escapeJson(customer.getPhoneNo()) + "\""
                         + "}";
                 out.write(json);
             } else {
@@ -86,28 +75,24 @@ public class CustomerSevlet extends HttpServlet {
         }
     }
 
-    /**
-     * Handles POST requests for customer registration.
-     * Receives parameters from the registration form, creates a Customer object,
-     * and persists it via the CustomerService.
-     */
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         // Retrieve parameters from the form (customerReg.jsp)
-        String registrationNumber = request.getParameter("registrationNumber");
+        String custId = request.getParameter("custId");
         String name = request.getParameter("name");
         String address = request.getParameter("address");
         String nic = request.getParameter("nic");
-        String telephone = request.getParameter("telephone");
+        String phoneno = request.getParameter("phoneno");
 
         // Build the Customer object using the Builder pattern
-        Customer customer = new Customer.Builder(registrationNumber)
+        Customer customer = new Customer.Builder(custId)
                 .name(name)
                 .address(address)
                 .nic(nic)
-                .telephone(telephone)
+                .phoneno(phoneno)
                 .build();
 
         try {
@@ -116,7 +101,7 @@ public class CustomerSevlet extends HttpServlet {
 
             if (success) {
                 // Set success message and forward back to customerReg.jsp
-                request.setAttribute("message", "Customer registered successfully with Registration Number: " + registrationNumber);
+                request.setAttribute("message", "Customer registered successfully with Customer Id: " + custId);
             } else {
                 request.setAttribute("errorMessage", "Failed to register customer. Please try again.");
             }
@@ -130,13 +115,7 @@ public class CustomerSevlet extends HttpServlet {
         request.getRequestDispatcher("customerReg.jsp").forward(request, response);
     }
 
-    /**
-     * Helper method to escape special characters in JSON string values.
-     * This is a simple implementation that escapes double quotes.
-     *
-     * @param value The string to be escaped.
-     * @return Escaped string safe for JSON output.
-     */
+ 
     private String escapeJson(String value) {
         if (value == null) {
             return "";

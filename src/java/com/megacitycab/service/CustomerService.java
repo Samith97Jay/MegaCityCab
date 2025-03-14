@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.megacitycab.service;
 
 import com.megacitycab.dao.CustomerDAO;
@@ -10,10 +5,10 @@ import com.megacitycab.model.Customer;
 import java.sql.SQLException;
 
 /**
- *
- * @author OZT00090
+ * Service class for handling business logic related to Customer.
  */
 public class CustomerService {
+
     private CustomerDAO customerDAO;
 
     public CustomerService() {
@@ -34,12 +29,12 @@ public class CustomerService {
     /**
      * Retrieves a customer by registration number.
      *
-     * @param registrationNumber the unique registration number.
+     * @param custId the unique registration number.
      * @return the Customer object if found; otherwise, null.
      * @throws SQLException if a database error occurs.
      */
-    public Customer getCustomer(String registrationNumber) throws SQLException, ClassNotFoundException {
-        return customerDAO.getCustomer(registrationNumber);
+    public Customer getCustomer(String custId) throws SQLException, ClassNotFoundException {
+        return customerDAO.getCustomer(custId);
     }
 
     /**
@@ -65,7 +60,8 @@ public class CustomerService {
     }
     
     
-    public Customer getCustomerByRegOrNic(String input) throws SQLException, ClassNotFoundException {
-    return CustomerDAO.getInstance().getCustomerByRegOrNic(input);
+    public Customer getCustomerByCustIdOrNic(String input) throws SQLException, ClassNotFoundException {
+    return CustomerDAO.getInstance().getCustomerByCusIdOrNic(input);
 }
+
 }

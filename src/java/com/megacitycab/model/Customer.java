@@ -10,12 +10,12 @@ import java.util.Objects;
  */
 public class Customer {
     // Required field: Unique customer registration number.
-    private final String registrationNumber;
+    private final String custId;
     // Optional fields capturing additional customer details.
     private final String name;
     private final String address;
     private final String nic;         // National Identity Card number
-    private final String telephone;
+    private final String phoneno;
 
     /**
      * Private constructor to enforce object creation via the Builder.
@@ -23,16 +23,16 @@ public class Customer {
      * @param builder the Builder instance containing customer data.
      */
     private Customer(Builder builder) {
-        this.registrationNumber = builder.registrationNumber;
+        this.custId = builder.custId;
         this.name = builder.name;
         this.address = builder.address;
         this.nic = builder.nic;
-        this.telephone = builder.telephone;
+        this.phoneno = builder.phoneno;
     }
 
     // Getters for all fields (no setters provided to maintain immutability)
-    public String getRegistrationNumber() {
-        return registrationNumber;
+    public String getCustId() {
+        return custId;
     }
 
     public String getName() {
@@ -47,24 +47,24 @@ public class Customer {
         return nic;
     }
 
-    public String getTelephone() {
-        return telephone;
+    public String getPhoneNo() {
+        return phoneno;
     }
 
     @Override
     public String toString() {
         return "Customer{" +
-                "registrationNumber='" + registrationNumber + '\'' +
+                "custId='" + custId + '\'' +
                 ", name='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", nic='" + nic + '\'' +
-                ", telephone='" + telephone + '\'' +
+                ", phoneno='" + phoneno + '\'' +
                 '}';
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(registrationNumber);
+        return Objects.hash(custId);
     }
 
     @Override
@@ -72,7 +72,7 @@ public class Customer {
         if (this == obj) return true;
         if (!(obj instanceof Customer)) return false;
         Customer other = (Customer) obj;
-        return Objects.equals(this.registrationNumber, other.registrationNumber);
+        return Objects.equals(this.custId, other.custId);
     }
 
     /**
@@ -80,24 +80,24 @@ public class Customer {
      */
     public static class Builder {
         // Required attribute for a Customer.
-        private final String registrationNumber;
+        private final String custId;
         // Optional attributes.
         private String name;
         private String address;
         private String nic;
-        private String telephone;
+        private String phoneno;
 
         /**
-         * Builder constructor with the required registrationNumber.
+         * Builder constructor with the required custId.
          *
-         * @param registrationNumber the unique registration number of the customer.
-         * @throws IllegalArgumentException if registrationNumber is null or empty.
+         * @param custId the unique registration number of the customer.
+         * @throws IllegalArgumentException if custId is null or empty.
          */
-        public Builder(String registrationNumber) {
-            if (registrationNumber == null || registrationNumber.trim().isEmpty()) {
-                throw new IllegalArgumentException("Registration number cannot be null or empty.");
+        public Builder(String custId) {
+            if (custId == null || custId.trim().isEmpty()) {
+                throw new IllegalArgumentException("Customer Id cannot be null or empty.");
             }
-            this.registrationNumber = registrationNumber;
+            this.custId = custId;
         }
 
         public Builder name(String name) {
@@ -115,16 +115,12 @@ public class Customer {
             return this;
         }
 
-        public Builder telephone(String telephone) {
-            this.telephone = telephone;
+        public Builder phoneno(String phoneno) {
+            this.phoneno = phoneno;
             return this;
         }
 
-        /**
-         * Builds and returns a new Customer instance.
-         *
-         * @return a Customer object constructed with the Builder's parameters.
-         */
+       
         public Customer build() {
             return new Customer(this);
         }

@@ -17,7 +17,7 @@
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item"><a class="nav-link" href="index.jsp">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="booking.jsp">Book a Car</a></li>
-                    <li class="nav-item"><a class="nav-link" href="viewbookings.jsp">View Bookings</a></li>
+                    <li class="nav-item"><a class="nav-link" href="BookingServlet?action=list">View Bookings</a></li>
                     <li class="nav-item"><a class="nav-link" href="login.jsp">Login</a></li>
                     <li class="nav-item"><a class="nav-link" href="signup.jsp">Sign Up</a></li>
                 </ul>

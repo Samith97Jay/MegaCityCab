@@ -41,7 +41,7 @@
             justify-content: space-between;
             z-index: 1000;
         }
-        header.navbar .brand {
+        header.navbar .vehicleBrand {
             font-size: 1.2rem;
             font-weight: bold;
             color: #333;
@@ -199,9 +199,9 @@
     </style>
     <script>
         // Function to generate a vehicle registration ID based on selected vehicle type
-        function generateVehicleRegId() {
+        function generateVehicleId() {
             var vehicleTypeSelect = document.getElementById("vehicleType");
-            var vehicleRegIdField = document.getElementById("vehicleRegId");
+            var vehicleIdField = document.getElementById("vehicleId");
             var type = vehicleTypeSelect.value;
             var prefix = "";
             if(type === "Car"){
@@ -210,24 +210,23 @@
                 prefix = "S";
             } else if(type === "Van"){
                 prefix = "V";
-            } else if(type === "Bus"){
-                prefix = "B";
+            
             }
             // Generate a random number between 1000 and 9999
             var randomNum = Math.floor(Math.random() * 9000) + 1000;
-            vehicleRegIdField.value = prefix + randomNum;
+            vehicleIdField.value = prefix + randomNum;
         }
 
         // When the page loads, ensure a registration ID is generated for the default selection
         window.onload = function(){
-            generateVehicleRegId();
+            generateVehicleId();
         };
     </script>
 </head>
 <body>
-    <!-- Navigation Header -->
+
     <header class="navbar">
-        <a class="brand" href="dashboard.jsp">Mega City Cab</a>
+        <a class="vehicleBrand" href="dashboard.jsp">Mega City Cab</a>
         <nav class="nav-links">
             <a href="booking.jsp">New Booking</a>
             <a href="BookingServlet?action=list">View Bookings</a>
@@ -255,38 +254,38 @@
         <% } %>
         
         <form action="VehicleServlet" method="post">
-            <!-- Vehicle Type Dropdown -->
+          
             <label for="vehicleType">Vehicle Type</label>
-            <select id="vehicleType" name="vehicleType" onchange="generateVehicleRegId()" required>
+            <select id="vehicleType" name="vehicleType" onchange="generateVehicleId()" required>
                 <option value="Car">Car</option>
                 <option value="SUV">SUV</option>
                 <option value="Van">Van</option>
-                <option value="Bus">Bus</option>
+               
             </select>
             
             <!-- Auto-generated Vehicle Registration ID (read-only) -->
-            <label for="vehicleRegId">Vehicle Registration ID</label>
-            <input type="text" id="vehicleRegId" name="vehicleRegId" readonly placeholder="Auto-generated ID">
+            <label for="vehicleId">Vehicle Registration ID</label>
+            <input type="text" id="vehicleId" name="vehicleId" readonly placeholder="Auto-generated ID">
 
             <!-- Other Fields -->
             <label for="licensePlate">Vehicle License Plate Number</label>
             <input type="text" id="licensePlate" name="licensePlate" placeholder="Enter License Plate">
             
-            <label for="brand">Vehicle Brand</label>
-            <input type="text" id="brand" name="brand" placeholder="Enter Vehicle Brand">
+            <label for="vehicleBrand">Vehicle Brand</label>
+            <input type="text" id="vehicleBrand" name="vehicleBrand" placeholder="Enter Vehicle Brand">
             
-            <label for="model">Vehicle Model</label>
-            <input type="text" id="model" name="model" placeholder="Enter Vehicle Model">
+            <label for="vehicleModel">Vehicle Model</label>
+            <input type="text" id="vehicleModel" name="vehicleModel" placeholder="Enter Vehicle Model">
             
             <label for="color">Vehicle Color</label>
             <input type="text" id="color" name="color" placeholder="Enter Vehicle Color">
             
-            <label for="seatingCapacity">Vehicle Seating Capacity</label>
-            <input type="number" id="seatingCapacity" name="seatingCapacity" placeholder="Enter Seating Capacity" min="1">
+            <label for="seat">Vehicle Seating Capacity</label>
+            <input type="number" id="seat" name="seat" placeholder="Enter Seat" min="1">
             
             <button type="submit">Register Vehicle</button>
             
-            <a class="back-link" href="register.jsp">Return Back</a>
+            <a class="back-link" href="dashboard.jsp">Return Back</a>
         </form>
     </div>
 </body>

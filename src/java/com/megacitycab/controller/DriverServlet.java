@@ -44,7 +44,7 @@ public class DriverServlet extends HttpServlet {
         String licenseNumber = request.getParameter("licenseNumber");
         String phone = request.getParameter("phone");
         String address = request.getParameter("address");
-        String assignedCarId = request.getParameter("assignedCarId");
+        String assignedVehicleId = request.getParameter("assignedVehicleId");
 
         // Build a Driver instance using the Builder pattern.
         Driver driver = new Driver.Builder(driverId)
@@ -52,7 +52,7 @@ public class DriverServlet extends HttpServlet {
                 .licenseNumber(licenseNumber)
                 .phone(phone)
                 .address(address)
-                .assignedCarId(assignedCarId)
+                .assignedVehicleId(assignedVehicleId)
                 .build();
 
         // Attempt to register the driver.

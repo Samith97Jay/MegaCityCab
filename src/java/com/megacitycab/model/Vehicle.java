@@ -14,12 +14,12 @@ import java.util.Objects;
 public class Vehicle {
     
      private final String vehicleType;     // Type of the vehicle (Vehicle, SUV, Van, Bus)
-    private final String vehicleRegId;    // Auto-generated unique registration ID
+    private final String vehicleId;    // Auto-generated unique registration ID
     private final String licensePlate;    // License plate number
-    private final String model;           // Model of the vehicle
-    private final String brand;           // Brand or manufacturer
+    private final String vehicleModel;           // Model of the vehicle
+    private final String vehicleBrand;           // Brand or manufacturer
     private final String color;           // Color of the vehicle
-    private final int seatingCapacity;    // Number of seats available
+    private final int seat;    // Number of seats available
 
     /**
      * Private constructor to enforce object creation via the Builder.
@@ -28,12 +28,12 @@ public class Vehicle {
      */
     private Vehicle(Builder builder) {
         this.vehicleType = builder.vehicleType;
-        this.vehicleRegId = builder.vehicleRegId;
+        this.vehicleId = builder.vehicleId;
         this.licensePlate = builder.licensePlate;
-        this.model = builder.model;
-        this.brand = builder.brand;
+        this.vehicleModel = builder.vehicleModel;
+        this.vehicleBrand = builder.vehicleBrand;
         this.color = builder.color;
-        this.seatingCapacity = builder.seatingCapacity;
+        this.seat = builder.seat;
     }
 
     // Getters for all fields (no setters to preserve immutability)
@@ -41,46 +41,46 @@ public class Vehicle {
         return vehicleType;
     }
 
-    public String getVehicleRegId() {
-        return vehicleRegId;
+    public String getVehicleId() {
+        return vehicleId;
     }
 
     public String getLicensePlate() {
         return licensePlate;
     }
 
-    public String getModel() {
-        return model;
+    public String getVehicleModel() {
+        return vehicleModel;
     }
 
-    public String getBrand() {
-        return brand;
+    public String getVehicleBrand() {
+        return vehicleBrand;
     }
 
     public String getColor() {
         return color;
     }
 
-    public int getSeatingCapacity() {
-        return seatingCapacity;
+    public int getSeat() {
+        return seat;
     }
 
     @Override
     public String toString() {
         return "Vehicle{" +
                 "vehicleType='" + vehicleType + '\'' +
-                ", vehicleRegId='" + vehicleRegId + '\'' +
+                ", vehicleId='" + vehicleId + '\'' +
                 ", licensePlate='" + licensePlate + '\'' +
-                ", model='" + model + '\'' +
-                ", brand='" + brand + '\'' +
+                ", vehicleModel='" + vehicleModel + '\'' +
+                ", vehicleBrand='" + vehicleBrand + '\'' +
                 ", color='" + color + '\'' +
-                ", seatingCapacity=" + seatingCapacity +
+                ", seat=" + seat +
                 '}';
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(vehicleRegId);
+        return Objects.hash(vehicleId);
     }
 
     @Override
@@ -88,7 +88,7 @@ public class Vehicle {
         if (this == obj) return true;
         if (!(obj instanceof Vehicle)) return false;
         Vehicle other = (Vehicle) obj;
-        return Objects.equals(this.vehicleRegId, other.vehicleRegId);
+        return Objects.equals(this.vehicleId, other.vehicleId);
     }
 
     /**
@@ -100,30 +100,30 @@ public class Vehicle {
     public static class Builder {
         // Required attributes
         private final String vehicleType;
-        private final String vehicleRegId;
+        private final String vehicleId;
         
         // Optional attributes
         private String licensePlate;
-        private String model;
-        private String brand;
+        private String vehicleModel;
+        private String vehicleBrand;
         private String color;
-        private int seatingCapacity;
+        private int seat;
 
         /**
          * Builder constructor with the required fields.
          *
          * @param vehicleType  the type of the vehicle (must not be null or empty)
-         * @param vehicleRegId the auto-generated vehicle registration ID (must not be null or empty)
+         * @param vehicleId the auto-generated vehicle registration ID (must not be null or empty)
          */
-        public Builder(String vehicleType, String vehicleRegId) {
+        public Builder(String vehicleType, String vehicleId) {
             if (vehicleType == null || vehicleType.trim().isEmpty()) {
                 throw new IllegalArgumentException("Vehicle type cannot be null or empty.");
             }
-            if (vehicleRegId == null || vehicleRegId.trim().isEmpty()) {
+            if (vehicleId == null || vehicleId.trim().isEmpty()) {
                 throw new IllegalArgumentException("Vehicle Registration ID cannot be null or empty.");
             }
             this.vehicleType = vehicleType;
-            this.vehicleRegId = vehicleRegId;
+            this.vehicleId = vehicleId;
         }
 
         public Builder licensePlate(String licensePlate) {
@@ -131,13 +131,13 @@ public class Vehicle {
             return this;
         }
 
-        public Builder model(String model) {
-            this.model = model;
+        public Builder vehicleModel(String vehicleModel) {
+            this.vehicleModel = vehicleModel;
             return this;
         }
 
-        public Builder brand(String brand) {
-            this.brand = brand;
+        public Builder vehicleBrand(String vehicleBrand) {
+            this.vehicleBrand = vehicleBrand;
             return this;
         }
 
@@ -146,8 +146,8 @@ public class Vehicle {
             return this;
         }
 
-        public Builder seatingCapacity(int seatingCapacity) {
-            this.seatingCapacity = seatingCapacity;
+        public Builder seat(int seat) {
+            this.seat = seat;
             return this;
         }
 

@@ -4,9 +4,17 @@
         <servlet-name>UserServlet</servlet-name>
         <servlet-class>com.megacitycab.controller.UserServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>SigninServlet</servlet-name>
+        <servlet-class>com.megacitycab.controller.SigninServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserServlet</servlet-name>
         <url-pattern>/UserServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>SigninServlet</servlet-name>
+        <url-pattern>/SigninServlet</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

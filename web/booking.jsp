@@ -6,168 +6,103 @@
     <title>Mega City Cab - New Booking</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
-        /* Reset defaults */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f2f2f2;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
-        /* Navigation styling */
-        header.navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: #fff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            padding: 1rem 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            z-index: 1000;
-        }
-        header.navbar .brand {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #333;
-            text-decoration: none;
-        }
-        header.navbar .nav-links {
-            display: flex;
-            gap: 1rem;
-        }
-        header.navbar .nav-links a {
-            color: #5563DE;
-            text-decoration: none;
-            font-size: 1rem;
-            transition: color 0.3s;
-        }
-        header.navbar .nav-links a:hover {
-            color: #444;
-        }
-        /* Style for the Dashboard link with icon */
-        header.navbar .nav-links a[href="dashboard.jsp"] {
-            position: relative;
-            padding-left: 30px; /* space for the icon */
-            background: url('https://img.icons8.com/?size=100&id=S5D5w5vFLhYp&format=png&color=000000') no-repeat left center;
-            background-size: 20px 20px;
-        }
-        /* Tooltip styling on hover */
-        header.navbar .nav-links a[href="dashboard.jsp"]:hover::after {
-            content: 'Dashboard';
-            position: absolute;
-            bottom: -30px; /* position tooltip below the link */
-            left: 50%;
-            transform: translateX(-50%);
-            background: #333;
-            color: #fff;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            white-space: nowrap;
-            opacity: 0;
-            transition: opacity 0.3s;
-            pointer-events: none;
-        }
-        /* Make tooltip visible on hover */
-        header.navbar .nav-links a[href="dashboard.jsp"]:hover::after {
-            opacity: 1;
-        }
-        /* Style for the Dashboard link with icon */
-        header.navbar .nav-links a[href="index.jsp"] {
-            position: relative;
-            padding-left: 30px; /* space for the icon */
-            background: url('https://img.icons8.com/?size=100&id=111473&format=png&color=000000') no-repeat left center;
-            background-size: 20px 20px;
-        }
-        /* Tooltip styling on hover */
-        header.navbar .nav-links a[href="index.jsp"]:hover::after {
-            content: 'Dashboard';
-            position: absolute;
-            bottom: -30px; /* position tooltip below the link */
-            left: 50%;
-            transform: translateX(-50%);
-            background: #333;
-            color: #fff;
-            padding: 4px 8px;
-            border-radius: 4px;
-            font-size: 0.85rem;
-            white-space: nowrap;
-            opacity: 0;
-            transition: opacity 0.3s;
-            pointer-events: none;
-        }
-        /* Make tooltip visible on hover */
-        header.navbar .nav-links a[href="index.jsp"]:hover::after {
-            opacity: 1;
-        }
-        /* Booking container styling */
-        .booking-container {
-            background: #fff;
-            padding: 2rem;
-            border-radius: 8px;
-            width: 400px;
-            max-width: 100%;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            margin-top: 75px;
-        }
-        .booking-container h2 {
-            text-align: center;
-            margin-bottom: 1.5rem;
-            color: #333;
-        }
-        .booking-container form {
-            display: flex;
-            flex-direction: column;
-        }
-        .booking-container label {
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-            color: #555;
-        }
-        .booking-container input[type="text"],
-        .booking-container input[type="date"],
-        .booking-container select {
-            padding: 0.75rem;
-            margin-bottom: 1rem;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 1rem;
-        }
-        .booking-container button {
-            padding: 0.75rem;
-            background: #5563DE;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-        .booking-container button:hover {
-            background: #444fb7;
-        }
-        .message {
-            text-align: center;
-            margin-bottom: 1rem;
-            font-size: 1rem;
-            color: green;
-        }
-        .error-message {
-            text-align: center;
-            margin-bottom: 1rem;
-            font-size: 1rem;
-            color: red;
-        }
+
+   .booking-container {
+    background: rgba(0, 0, 0, 0.85);
+    color: #fff;
+    padding: 2rem;
+    border-radius: 8px;
+    width: 400px;
+    max-width: 100%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    margin-top: 75px;
+    position: relative;
+    text-align: center;
+}
+
+.booking-container h2 {
+    color: #ffcc00;
+    margin-bottom: 1.5rem;
+}
+
+.booking-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.booking-container label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    text-align: left;
+    display: block;
+}
+
+.booking-container input[type="text"],
+.booking-container input[type="date"],
+.booking-container select {
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ffcc00;
+    border-radius: 4px;
+    font-size: 1rem;
+    background: #222;
+    color: #fff;
+}
+
+.booking-container input:focus, 
+.booking-container select:focus {
+    outline: none;
+    border-color: #ffd633;
+}
+
+.booking-container button {
+    padding: 0.75rem;
+    background: #ffcc00;
+    color: #333;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    font-weight: bold;
+}
+
+.booking-container button:hover {
+    background: #ffd633;
+}
+
+.message {
+    text-align: center;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    color: #4caf50;
+}
+
+.error-message {
+    text-align: center;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+    color: #ff4d4d;
+    
+    .booking-container {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2rem;
+    border-radius: 8px;
+    width: 400px;
+    max-width: 100%;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    
+    /* Centering the form */
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    right: 50%;
+    transform: translate(-50%, -50%);
+}
+    
+    
+}
+
     </style>
     <script>
         // Function to auto-generate a booking number in the format "BKN" followed by 6 digits.
@@ -178,11 +113,11 @@
 
         // Function to fetch customer details based on Registration Number or NIC.
         function fetchCustomerDetails() {
-            var regNo = document.getElementById("customerRegNo").value;
+            var regNo = document.getElementById("custId").value;
             if (regNo.trim() === "") {
                 return;
             }
-            var url = "<%= request.getContextPath() %>/CustomerRegistrationServlet?action=getCustomer&customerRegNo=" + encodeURIComponent(regNo);
+            var url = "<%= request.getContextPath() %>/CustomerServlet?action=getCustomer&custId=" + encodeURIComponent(regNo);
             fetch(url)
                 .then(response => {
                     if (!response.ok) {
@@ -193,10 +128,10 @@
                 .then(data => {
                     if (data && data.customerName) {
                         document.getElementById("customerName").value = data.customerName;
-                        document.getElementById("telephoneNumber").value = data.telephoneNumber;
+                        document.getElementById("phoneno").value = data.phoneno;
                     } else {
                         document.getElementById("customerName").value = "";
-                        document.getElementById("telephoneNumber").value = "";
+                        document.getElementById("phoneno").value = "";
                         alert("Customer not found");
                     }
                 })
@@ -211,10 +146,10 @@
         function fetchVehicleDetails() {
             var vehicleType = document.getElementById("vehicleType").value;
             if (vehicleType.trim() === "") {
-                document.getElementById("vehicleRegId").value = "";
-                document.getElementById("brand").value = "";
-                document.getElementById("model").value = "";
-                document.getElementById("seatingCapacity").value = "";
+                document.getElementById("vehicleId").value = "";
+                document.getElementById("vehicleBrand").value = "";
+                document.getElementById("vehicleModel").value = "";
+                document.getElementById("seat").value = "";
                 return;
             }
             // Calls VehicleServlet with an action to get an available and not-yet-booked vehicle.
@@ -231,21 +166,21 @@
                     if (data && data.message && data.message === "All vehicles are booked") {
                         alert("All vehicles are booked for the selected type.");
                         document.getElementById("vehicleRegId").value = "";
-                        document.getElementById("brand").value = "";
-                        document.getElementById("model").value = "";
-                        document.getElementById("seatingCapacity").value = "";
+                        document.getElementById("vehicleBrand").value = "";
+                        document.getElementById("vehicleModel").value = "";
+                        document.getElementById("seat").value = "";
                     } else if (data && data.vehicleRegId) {
                         // Populate the fields with the available vehicle details.
                         document.getElementById("vehicleRegId").value = data.vehicleRegId;
-                        document.getElementById("brand").value = data.brand;
-                        document.getElementById("model").value = data.model;
-                        document.getElementById("seatingCapacity").value = data.seatingCapacity;
+                        document.getElementById("vehicleBrand").value = data.vehicleBrand;
+                        document.getElementById("vehicleModel").value = data.vehicleModel;
+                        document.getElementById("seat").value = data.seat;
                     } else {
                         // If no vehicle was returned, clear the fields and alert.
                         document.getElementById("vehicleRegId").value = "";
-                        document.getElementById("brand").value = "";
-                        document.getElementById("model").value = "";
-                        document.getElementById("seatingCapacity").value = "";
+                        document.getElementById("vehicleBrand").value = "";
+                        document.getElementById("vehicleModel").value = "";
+                        document.getElementById("seat").value = "";
                         alert("No available vehicle found for the selected type.");
                     }
                 })
@@ -283,16 +218,16 @@
             <input type="text" id="bookingNumber" name="bookingNumber" readonly placeholder="Auto generated Booking Number">
 
             <!-- Customer Registration Number / NIC -->
-            <label for="customerRegNo">Customer Registration Number / NIC</label>
-            <input type="text" id="customerRegNo" name="customerRegNo" placeholder="Registration Number or NIC" required onblur="fetchCustomerDetails()">
+            <label for="custId">Customer Registration Number / NIC</label>
+            <input type="text" id="custId" name="custId" placeholder="Customer Id or NIC" required onblur="fetchCustomerDetails()">
 
             <!-- Auto-filled Customer Name -->
             <label for="customerName">Customer Name</label>
             <input type="text" id="customerName" name="customerName" placeholder="Customer Name" readonly>
 
             <!-- Auto-filled Telephone Number -->
-            <label for="telephoneNumber">Contact Number</label>
-            <input type="text" id="telephoneNumber" name="telephoneNumber" placeholder="Contact Number" readonly>
+            <label for="phoneno">Contact Number</label>
+            <input type="text" id="phoneno" name="phoneno" placeholder="Contact Number" readonly>
 
             <!-- Vehicle Details Section -->
             <label for="vehicleType">Vehicle Type</label>
@@ -307,14 +242,14 @@
             <label for="vehicleRegId">Vehicle Registration ID</label>
             <input type="text" id="vehicleRegId" name="vehicleRegId" placeholder="Vehicle Registration ID" readonly>
 
-            <label for="brand">Vehicle Brand</label>
-            <input type="text" id="brand" name="brand" placeholder="Brand" readonly>
+            <label for="vehicleBrand">Vehicle Brand</label>
+            <input type="text" id="vehicleBrand" name="vehicleBrand" placeholder="Brand" readonly>
 
-            <label for="model">Vehicle Model</label>
-            <input type="text" id="model" name="model" placeholder="Model" readonly>
+            <label for="vehicleModel">Vehicle Model</label>
+            <input type="text" id="vehicleModel" name="vehicleModel" placeholder="Model" readonly>
 
-            <label for="seatingCapacity">Vehicle Seating Capacity</label>
-            <input type="text" id="seatingCapacity" name="seatingCapacity" placeholder="Seating Capacity" readonly>
+            <label for="seat">Vehicle Seating Capacity</label>
+            <input type="text" id="seat" name="seat" placeholder="Seating Capacity" readonly>
 
             <!-- Pickup Location -->
             <label for="pickupLocation">Pickup Location</label>
@@ -329,6 +264,7 @@
             <input type="date" id="bookingDate" name="bookingDate">
 
             <button type="submit">Reserve a Booking</button>
+            
         </form>
     </div>
 </body>

@@ -176,12 +176,11 @@
     </style>
 </head>
 <body>
-    <!-- Navigation Header -->
+
     <header class="navbar">
         <a class="brand" href="dashboard.jsp">Mega City Cab</a>
         <nav class="nav-links">
             <a href="booking.jsp">New Booking</a>
-            <!-- To view list, pass action=list -->
             <a href="BookingServlet?action=list">View Bookings</a>
             <a href="register.jsp">Registration</a>
             <a href="viewEdt.jsp">View</a>
@@ -194,7 +193,7 @@
  
 <div class="container">
     <%
-        // Check if a list of bookings was provided.
+       
         List<Booking> bookings = (List<Booking>) request.getAttribute("bookings");
         Booking booking = (Booking) request.getAttribute("booking");
         String errorMessage = (String) request.getAttribute("errorMessage");
@@ -207,7 +206,7 @@
     %>
         <h1>Bookings List</h1>
         <% for (Booking b : bookings) { %>
-            <!-- Each card is clickable. Clicking sends the bookingNumber to BookingServlet for full details -->
+           
             <a href="BookingServlet?bookingNumber=<%= b.getBookingNumber() %>" style="text-decoration:none;">
                 <div class="booking-card">
                     <div class="booking-info">
