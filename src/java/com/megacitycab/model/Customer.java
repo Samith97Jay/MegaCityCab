@@ -9,12 +9,11 @@ import java.util.Objects;
  * flexible construction process for Customer objects.
  */
 public class Customer {
-    // Required field: Unique customer registration number.
+
     private final String custId;
-    // Optional fields capturing additional customer details.
     private final String name;
     private final String address;
-    private final String nic;         // National Identity Card number
+    private final String nic;        
     private final String phoneno;
 
     /**
@@ -29,6 +28,9 @@ public class Customer {
         this.nic = builder.nic;
         this.phoneno = builder.phoneno;
     }
+
+    
+  
 
     // Getters for all fields (no setters provided to maintain immutability)
     public String getCustId() {
@@ -47,7 +49,7 @@ public class Customer {
         return nic;
     }
 
-    public String getPhoneNo() {
+    public String getPhoneno() {
         return phoneno;
     }
 
@@ -74,6 +76,7 @@ public class Customer {
         Customer other = (Customer) obj;
         return Objects.equals(this.custId, other.custId);
     }
+
 
     /**
      * Builder class for constructing Customer instances.
@@ -120,7 +123,11 @@ public class Customer {
             return this;
         }
 
-       
+        /**
+         * Builds and returns a new Customer instance.
+         *
+         * @return a Customer object constructed with the Builder's parameters.
+         */
         public Customer build() {
             return new Customer(this);
         }

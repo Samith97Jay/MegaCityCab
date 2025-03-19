@@ -198,7 +198,7 @@
             <a href="booking.jsp">New Booking</a>
             <a href="BookingServlet?action=list">View Bookings</a>
             <a href="register.jsp">Registration</a>
-            <a href="viewEdt.jsp">View</a>
+            <a href="retrive.jsp">View</a>
             <a href="billing.jsp">Billing</a>
             <a href="help.jsp">Help</a>
             <a href="dashboard.jsp"></a>
@@ -210,7 +210,7 @@
     <h2>Search Record</h2>
     <!-- Search Section -->
     <div class="search-section">
-        <form action="ViewEditServlet?" method="get">
+        <form action="RetrivalServlet" method="get">
             <input type="text" name="searchId" placeholder="Enter ID (e.g., CUS_123, DI456, V789 or NIC)" required />
             <button type="submit">Search</button>
         </form>
@@ -225,7 +225,7 @@
     <% } %>
 
     <!-- Conditionally display edit form based on search result -->
-    <%
+      <%
         String recordType = (String) request.getAttribute("recordType");
         if(recordType != null) {
             if(recordType.equals("customer")) {
@@ -233,21 +233,21 @@
     %>
                 <h2>View/Edit Customer Details</h2>
                 <div class="form-section">
-                    <form action="ViewEditServlet?searchId" method="post">
+                    <form action="RetrivalServlet" method="post">
                         <label>Registration Number</label>
-                        <input type="text" name="registrationNumber" value="<%= customer.getCustID() %>" readonly />
+                        <input type="text" name="custId" value="<%= customer.getCustId() %>" readonly />
                         
                         <label>Customer Name</label>
-                        <input type="text" name="customerName" value="<%= customer.getName() %>" required />
+                        <input type="text" name="name" value="<%= customer.getName() %>" required />
                         
                         <label>Customer Address</label>
-                        <input type="text" name="customerAddress" value="<%= customer.getAddress() %>" required />
+                        <input type="text" name="address" value="<%= customer.getAddress() %>" required />
                         
                         <label>NIC Number</label>
-                        <input type="text" name="customerNic" value="<%= customer.getNic() %>" required />
+                        <input type="text" name="nic" value="<%= customer.getNic() %>" required />
                         
                         <label>Contact Number</label>
-                        <input type="text" name="customerTelephone" value="<%= customer.getTelephone() %>" required />
+                        <input type="text" name="phoneno" value="<%= customer.getPhoneno() %>" required />
                         
                         <button type="submit">Update Customer Details</button>
                     </form>
@@ -258,7 +258,7 @@
     %>
                 <h2>View/Edit Driver Details</h2>
                 <div class="form-section">
-                    <form action="ViewEditServlet" method="post">
+                    <form action="RetrivalServlet" method="post">
                         <label>Driver ID</label>
                         <input type="text" name="driverId" value="<%= driver.getDriverId() %>" readonly />
                         
@@ -284,7 +284,7 @@
             } else if(recordType.equals("vehicle")) {
                 com.megacitycab.model.Vehicle vehicle = (com.megacitycab.model.Vehicle) request.getAttribute("vehicle");
     %>
-                <h2>View/Edit Vehicle Details</h2>
+          <%--      <h2>View/Edit Vehicle Details</h2>
                 <div class="form-section">
                     <form action="ViewEditServlet" method="post">
                         <label>Vehicle Registration ID</label>
@@ -310,7 +310,7 @@
                         
                         <button type="submit">Update Vehicle Details</button>
                     </form>
-                </div>
+                </div>--%>
     <%
             }
         }

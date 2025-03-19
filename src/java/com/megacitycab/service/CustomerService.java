@@ -3,65 +3,120 @@ package com.megacitycab.service;
 import com.megacitycab.dao.CustomerDAO;
 import com.megacitycab.model.Customer;
 import java.sql.SQLException;
+import java.util.List;
 
-/**
- * Service class for handling business logic related to Customer.
- */
+
 public class CustomerService {
 
-    private CustomerDAO customerDAO;
+private final CustomerDAO customerDAO;
 
+    /**
+     * Default constructor using Singleton DAO instance.
+     */
     public CustomerService() {
         this.customerDAO = CustomerDAO.getInstance();
     }
 
     /**
-     * Adds a new customer to the system.
-     *
-     * @param customer the Customer object containing registration details.
-     * @return true if added successfully; false otherwise.
-     * @throws SQLException if a database error occurs.
+     * Constructor for Dependency Injection (Optional).
+     * 
+     * @param customerDAO DAO instance for handling customer data.
      */
-    public boolean addCustomer(Customer customer) throws SQLException, ClassNotFoundException {
-        return customerDAO.addCustomer(customer);
+    public CustomerService(CustomerDAO customerDAO) {
+        this.customerDAO = customerDAO;
     }
 
     /**
-     * Retrieves a customer by registration number.
+     * Inserts a new customer into the database.
      *
-     * @param custId the unique registration number.
-     * @return the Customer object if found; otherwise, null.
-     * @throws SQLException if a database error occurs.
+     * @param customer the Customer object to insert.
+     * @return true if successfully inserted, false otherwise.
+     * @throws SQLException, ClassNotFoundException if a database error occurs.
+     */
+    public boolean insertCustomer(Customer customer) throws SQLException, ClassNotFoundException {
+        if (customer == null || customer.getCustId().trim().isEmpty()) {
+            throw new IllegalArgumentException("Customer object or Customer ID cannot be null/empty.");
+        }
+        return customerDAO.insertCustomer(customer);
+    }
+
+    /**
+     * Retrieves a customer by their unique ID.
+     *
+     * @param custId the customer ID.
+     * @return the Customer object if found, otherwise null.
+     * @throws SQLException, ClassNotFoundException if a database error occurs.
      */
     public Customer getCustomer(String custId) throws SQLException, ClassNotFoundException {
+        if (custId == null || custId.trim().isEmpty()) {
+            throw new IllegalArgumentException("Customer ID cannot be null/empty.");
+        }
         return customerDAO.getCustomer(custId);
     }
 
     /**
-     * Retrieves a customer based on NIC.
+     * Fetches all customers from the database.
      *
-     * @param nic the NIC number of the customer.
-     * @return the Customer object if found; otherwise, null.
-     * @throws SQLException if a database error occurs.
+     * @return a List of all Customer objects.
+     * @throws SQLException, ClassNotFoundException if a database error occurs.
      */
-    public Customer getCustomerByNic(String nic) throws SQLException, ClassNotFoundException {
-        return customerDAO.getCustomerByNic(nic);
+    public List<Customer> fetchAllCustomers() throws SQLException, ClassNotFoundException {
+        return customerDAO.fetchAllCustomers();
     }
-    
+
     /**
-     * Updates an existing customer record.
+     * Retrieves a customer by NIC number.
      *
-     * @param customer the Customer object with updated details.
-     * @return true if the update was successful; false otherwise.
-     * @throws Exception if a database error occurs.
+     * @param nic the customer's NIC.
+     * @return the Customer object if found, otherwise null.
+     * @throws SQLException, ClassNotFoundException if a database error occurs.
+     */
+    public Customer fetchCustomerByNic(String nic) throws SQLException, ClassNotFoundException {
+        if (nic == null || nic.trim().isEmpty()) {
+            throw new IllegalArgumentException("NIC cannot be null/empty.");
+        }
+        return customerDAO.fetchCustomerByNic(nic);
+    }
+
+    /**
+     * Retrieves a customer using either Customer ID or NIC.
+     *
+     * @param input the Customer ID or NIC.
+     * @return the Customer object if found, otherwise null.
+     * @throws SQLException, ClassNotFoundException if a database error occurs.
+     */
+    public Customer fetchCustomerByIdOrNic(String input) throws SQLException, ClassNotFoundException {
+        if (input == null || input.trim().isEmpty()) {
+            throw new IllegalArgumentException("Input (Customer ID/NIC) cannot be null/empty.");
+        }
+        return customerDAO.fetchCustomerByIdOrNic(input);
+    }
+
+    /**
+     * Updates an existing customer in the database.
+     *
+     * @param customer the Customer object containing updated details.
+     * @return true if update is successful, false otherwise.
+     * @throws Exception if a database error occurs or invalid data is provided.
      */
     public boolean updateCustomer(Customer customer) throws Exception {
+        if (customer == null || customer.getCustId().trim().isEmpty()) {
+            throw new IllegalArgumentException("Customer object or Customer ID cannot be null/empty.");
+        }
         return customerDAO.updateCustomer(customer);
     }
-    
-    
-    public Customer getCustomerByCustIdOrNic(String input) throws SQLException, ClassNotFoundException {
-    return CustomerDAO.getInstance().getCustomerByCusIdOrNic(input);
-}
 
+    /**
+     * Deletes a customer record based on Customer ID.
+     *
+     * @param custId the unique ID of the customer.
+     * @return true if deletion is successful, false otherwise.
+     * @throws SQLException, ClassNotFoundException if a database error occurs.
+     */
+    public boolean deleteCustomer(String custId) throws SQLException, ClassNotFoundException {
+        if (custId == null || custId.trim().isEmpty()) {
+            throw new IllegalArgumentException("Customer ID cannot be null/empty.");
+        }
+        return customerDAO.deleteCustomer(custId);
+    }
 }

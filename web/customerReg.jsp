@@ -1,217 +1,232 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" import="java.text.SimpleDateFormat, java.util.Date" %>
+<%@ page import="java.io.*, java.text.SimpleDateFormat, java.util.Date" %>
+<%@ page import="java.io.*, java.text.SimpleDateFormat, java.util.Date" %>
+<%@ page import="java.io.*, java.text.SimpleDateFormat, java.util.Date" %>
 <%
-    // Generate a unique customer ID using the current date and time
+    // Define the file path to store the last generated number
+    String filePath = application.getRealPath("/") + "lastCustomerId.txt";
+    int lastId = 1000; // Default starting value if the file does not exist
+
+    try {
+        File file = new File(filePath);
+        if (file.exists()) {
+            BufferedReader reader = new BufferedReader(new FileReader(file));
+            String lastLine = reader.readLine();
+            if (lastLine != null) {
+                lastId = Integer.parseInt(lastLine); // Read last saved ID
+            }
+            reader.close();
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    // Increment the last customer ID
+    int newId = lastId + 1;
+
+    // Save the updated ID back to the file
+    try {
+        BufferedWriter writer = new BufferedWriter(new FileWriter(filePath));
+        writer.write(String.valueOf(newId));
+        writer.close();
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
+
+    // Generate a timestamp
     SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmss");
     String timestamp = sdf.format(new Date());
-    String custId = "CUS00_" + timestamp;
+
+    // Generate Customer ID (combining incrementing number and timestamp)
+    String custId = "CUS" + timestamp + "_" + newId ;
 %>
-<!DOCTYPE html>
+
 <html>
 <head>
     <meta charset="UTF-8">
     <title>Customer Registration</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" rel="stylesheet">
     <style>
- 
-        * {
-            box-sizing: border-box;
+        body {
+            font-family: 'Poppins', sans-serif;
             margin: 0;
             padding: 0;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f2f2f2;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            padding: 20px;
-        }
- 
-        header.navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: #fff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            padding: 1rem 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            z-index: 1000;
-        }
-        header.navbar .brand {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #333;
-            text-decoration: none;
-        }
-        header.navbar .nav-links {
-            display: flex;
-            gap: 1rem;
-        }
-        header.navbar .nav-links a {
-            color: #5563DE;
-            text-decoration: none;
-            font-size: 1rem;
-            transition: color 0.3s;
-        }
-        header.navbar .nav-links a:hover {
-            color: #444;
-        }
-        /* Style for the Dashboard link with icon */
-        header.navbar .nav-links a[href="dashboard.jsp"] {
-          position: relative;
-          padding-left: 30px; /* space for the icon */
-          background: url('https://img.icons8.com/?size=100&id=S5D5w5vFLhYp&format=png&color=000000') no-repeat left center;
-          background-size: 20px 20px;
-        }
-
-        /* Tooltip styling on hover */
-        header.navbar .nav-links a[href="dashboard.jsp"]:hover::after {
-          content: 'Dashboard';
-          position: absolute;
-          bottom: -30px; /* position tooltip below the link */
-          left: 50%;
-          transform: translateX(-50%);
-          background: #333;
-          color: #fff;
-          padding: 4px 8px;
-          border-radius: 4px;
-          font-size: 0.85rem;
-          white-space: nowrap;
-          opacity: 0;
-          transition: opacity 0.3s;
-          pointer-events: none;
-        }
-
-        /* Make tooltip visible on hover */
-        header.navbar .nav-links a[href="dashboard.jsp"]:hover::after {
-          opacity: 1;
-        }
-        
-        /* Style for the Dashboard link with icon */
-        header.navbar .nav-links a[href="index.jsp"] {
-          position: relative;
-          padding-left: 30px; /* space for the icon */
-          background: url('https://img.icons8.com/?size=100&id=111473&format=png&color=000000') no-repeat left center;
-          background-size: 20px 20px;
-        }
-
-        /* Tooltip styling on hover */
-        header.navbar .nav-links a[href="index.jsp"]:hover::after {
-          content: 'Dashboard';
-          position: absolute;
-          bottom: -30px; /* position tooltip below the link */
-          left: 50%;
-          transform: translateX(-50%);
-          background: #333;
-          color: #fff;
-          padding: 4px 8px;
-          border-radius: 4px;
-          font-size: 0.85rem;
-          white-space: nowrap;
-          opacity: 0;
-          transition: opacity 0.3s;
-          pointer-events: none;
-        }
-
-        /* Make tooltip visible on hover */
-        header.navbar .nav-links a[href="index.jsp"]:hover::after {
-          opacity: 1;
-        }
-        
-        .booking-container {
-            background: #fff;
-            padding: 2rem;
-            border-radius: 8px;
-            width: 400px;
-            max-width: 100%;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            margin-top: 80px;
-        }
-        .booking-container h2 {
-            text-align: center;
-            margin-bottom: 1.5rem;
-            color: #333;
-        }
-        .booking-container form {
+            background: url('img/car-bg.jpg') no-repeat center center/cover;
+            height: 100vh;
             display: flex;
             flex-direction: column;
         }
-        .booking-container label {
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-            color: #555;
+
+        /* Navigation Bar */
+        .navbar {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
         }
-        .booking-container input[type="text"],
-        .booking-container input[type="date"] {
-            padding: 0.75rem;
+
+        .navbar .brand {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #ffcc00;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .navbar .brand:hover {
+            color: #ffd633;
+        }
+
+        /* Nav Links */
+        .nav-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: #ffffff;
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            padding: 10px 15px;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-links a::after {
+            content: "";
+            display: block;
+            width: 0;
+            height: 3px;
+            background: #ffcc00;
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: #ffcc00;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-top: 100px;
+            text-align: center;
+            color: white;
+        }
+
+        .form-container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2rem;
+            border-radius: 10px;
+            width: 450px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            margin: auto;
+            text-align: left;
+        }
+
+        .form-container h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-container input[type="text"] {
+            padding: 0.8rem;
             margin-bottom: 1rem;
             border: 1px solid #ccc;
-            border-radius: 4px;
+            border-radius: 5px;
             font-size: 1rem;
+            width: 100%;
         }
-        .booking-container input[readonly] {
-            background: #e9ecef;
-        }
-        .booking-container button {
-            padding: 0.75rem;
-            background: #5563DE;
-            color: #fff;
+
+        .form-container button {
+            padding: 0.8rem;
+            background: #ffcc00;
+            color: #333;
             border: none;
-            border-radius: 4px;
+            border-radius: 5px;
             font-size: 1rem;
             cursor: pointer;
+            width: 100%;
             transition: background 0.3s ease;
         }
-        .booking-container button:hover {
-            background: #444fb7;
+
+        .form-container button:hover {
+            background: #e6b800;
         }
-        .message {
-            text-align: center;
-            margin-bottom: 1rem;
-            font-size: 1rem;
-            color: green;
-        }
-        .error-message {
-            text-align: center;
-            margin-bottom: 1rem;
-            font-size: 1rem;
-            color: red;
-        }
+
         .back-link {
             display: block;
             text-align: center;
-            margin-top: 2rem;
+            margin-top: 1.5rem;
             text-decoration: none;
             font-size: 1rem;
-            color: #5563DE;
+            color: #ffcc00;
             transition: color 0.3s ease;
         }
+
         .back-link:hover {
-            color: #444;
+            color: #e6b800;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.9);
+            padding: 15px;
+            text-align: center;
+            width: 100%;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+        }
+
+        footer p {
+            margin: 0;
+            color: #fff;
         }
     </style>
+       <script>
+        window.onload = function() {
+            // Check if the form was already submitted
+            if (!sessionStorage.getItem("formSubmitted")) {
+                document.getElementById("autoSubmitForm").submit();
+                sessionStorage.setItem("formSubmitted", "true"); // Prevent duplicate submission
+            }
+        };
+    </script>
 </head>
 <body>
+
     <!-- Navigation Header -->
     <header class="navbar">
         <a class="brand" href="dashboard.jsp">Mega City Cab</a>
         <nav class="nav-links">
             <a href="booking.jsp">New Booking</a>
             <a href="BookingServlet?action=list">View Bookings</a>
-            <a href="register.jsp">Registration</a>
-            <a href="viewEdt.jsp">View</a>
+            <a href="customerReg.jsp">Customer Registration</a>
+            <a href="retrive.jsp">View Customers</a>
             <a href="billing.jsp">Billing</a>
             <a href="help.jsp">Help</a>
-            <a href="dashboard.jsp"></a>
-            <a href="index.jsp"></a>
+            <a href="dashboard.jsp">Dashboard</a>
+            <a href="index.jsp">Home</a>
         </nav>
     </header>
     
-    <div class="booking-container">
+    <div class="form-container">
         <h2>Customer Registration</h2>
+
         <%-- Display dynamic messages if present --%>
         <%
             String message = (String) request.getAttribute("message");
@@ -222,30 +237,38 @@
         <% } else if (errorMessage != null) { %>
             <div class="error-message"><%= errorMessage %></div>
         <% } %>
-        <form action="CustomerServlet" method="post">
-            <!-- Display the auto-generated registration number (read-only) -->
-            <label for="custId">Registration Number</label>
-            <input type="text" id="custId" name="custIdDisplay" value="<%=custId%>" readonly>
-            <!-- Hidden field to submit the registration number -->
-            <input type="hidden" name="custId" value="<%=custId%>">
+
+        <form action="CustomerServlet" method="post" id="autoSubmitForm">
+            <!-- Auto-generated Customer ID -->
+          <label for="custId" id="custIdLabel" style="display: none;">Customer ID</label>
+<input type="text" id="custId" name="custIdDisplay" value="<%=custId%>" readonly style="display: none;">
+<input type="hidden" name="custId" value="<%=custId%>">
+
+<script>
+    window.onload = function() {
+        // Hide the Customer ID label and input field
+        document.getElementById("custIdLabel").style.display = "none";
+        document.getElementById("custId").style.display = "none";
+    };
+</script>
             
-            <label for="name">Name</label>
+            <label for="name">Full Name</label>
             <input type="text" id="name" name="name" required>
             
             <label for="address">Address</label>
             <input type="text" id="address" name="address">
             
             <label for="nic">NIC Number</label>
-            <input type="text" id="nic" name="nic" pattern="[0-9]{9}[VvXx]|[0-9]{12}" required >
+            <input type="text" id="nic" name="nic" pattern="[0-9]{9}[VvXx]|[0-9]{12}" required>
             
-            
-            <label for="phoneno">Contact Number</label>
-            <input type="text" id="phoneno" name="phoneno" input type="text" id="phoneno" name="phoneno" pattern="[0-9]{10}" required>
+            <label for="phoneno">Phone Number</label>
+            <input type="text" id="phoneno" name="phoneno" pattern="[0-9]{10}" required>
            
-            
             <button type="submit">Register</button>
         </form>
-            <a class="back-link" href="register.jsp">Return Back</a>
+
+        <a class="back-link" href="customerReg.jsp">Back</a>
     </div>
+
 </body>
 </html>
