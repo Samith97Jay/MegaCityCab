@@ -3,42 +3,63 @@ package com.megacitycab.model;
 import java.util.Date;
 import java.util.Objects;
 
-/**
- * Represents a cab booking in the Mega City Cab system.
- * This class is implemented using the Builder design pattern.
- */
+
 public class Booking {
-    private final String bookingNumber;
+    private final String bookingId;
     private final String customerName;
     private final String customerAddress;
-    private final String telephoneNumber;
+    private final String telephoneNo;
     private final String destination;
     private final Date bookingDate;
-    private final String customerRegNo;
-    // New vehicle fields
-    private final String vehicleType;
-    private final String vehicleRegId;
-    private final String vbrand;
-    private final String vmodel;
-    private final String vseating;
 
-    private Booking(Builder builder) {
-        this.bookingNumber = builder.bookingNumber;
-        this.customerName = builder.customerName;
-        this.customerAddress = builder.customerAddress;
-        this.telephoneNumber = builder.telephoneNumber;
-        this.destination = builder.destination;
-        this.bookingDate = builder.bookingDate != null ? new Date(builder.bookingDate.getTime()) : null;
-        this.customerRegNo = builder.customerRegNo;
-        this.vehicleType = builder.vehicleType;
-        this.vehicleRegId = builder.vehicleRegId;
-        this.vbrand = builder.vbrand;
-        this.vmodel = builder.vmodel;
-        this.vseating = builder.vseating;
+    public String getPickupLocation() {
+        return pickupLocation;
+    }
+    private final String pickupLocation;
+    private final String customerId;
+    private final String vehicleType;
+    private final String vehicleId;
+    private final String vehicleBrand;
+    private final String vehicleModel;
+    private final String seat;
+
+
+
+    public Booking(String bookingId, String customerName, String customerAddress, String telephoneNo, String destination, Date bookingDate, String pickupLocation, String customerId, String vehicleType, String vehicleId, String vehicleBrand, String vehicleModel, String seat) {
+        this.bookingId = bookingId;
+        this.customerName = customerName;
+        this.customerAddress = customerAddress;
+        this.telephoneNo = telephoneNo;
+        this.destination = destination;
+        this.bookingDate = bookingDate;
+        this.pickupLocation = pickupLocation;
+        this.customerId = customerId;
+        this.vehicleType = vehicleType;
+        this.vehicleId = vehicleId;
+        this.vehicleBrand = vehicleBrand;
+        this.vehicleModel = vehicleModel;
+        this.seat = seat;
     }
 
-    public String getBookingNumber() {
-        return bookingNumber;
+
+    private Booking(Builder builder) {
+        this.bookingId = builder.bookingId;
+        this.customerName = builder.customerName;
+        this.customerAddress = builder.customerAddress;
+        this.telephoneNo = builder.telephoneNo;
+        this.destination = builder.destination;
+        this.bookingDate = builder.bookingDate != null ? new Date(builder.bookingDate.getTime()) : null;
+         this.pickupLocation = builder.pickupLocation;
+        this.customerId = builder.customerId;
+        this.vehicleType = builder.vehicleType;
+        this.vehicleId = builder.vehicleId;
+        this.vehicleBrand = builder.vehicleBrand;
+        this.vehicleModel = builder.vehicleModel;
+        this.seat = builder.seat;
+    }
+
+    public String getBookingId() {
+        return bookingId;
     }
 
     public String getCustomerName() {
@@ -49,8 +70,8 @@ public class Booking {
         return customerAddress;
     }
 
-    public String getTelephoneNumber() {
-        return telephoneNumber;
+    public String getTelephoneNo() {
+        return telephoneNo;
     }
 
     public String getDestination() {
@@ -61,8 +82,8 @@ public class Booking {
         return bookingDate != null ? new Date(bookingDate.getTime()) : null;
     }
     
-    public String getCustomerRegNo() {
-        return customerRegNo;
+    public String getCustomerId() {
+        return customerId;
     }
     
     // New getters for vehicle details
@@ -70,43 +91,44 @@ public class Booking {
         return vehicleType;
     }
 
-    public String getVehicleRegId() {
-        return vehicleRegId;
+    public String getVehicleId() {
+        return vehicleId;
     }
 
-    public String getVbrand() {
-        return vbrand;
+    public String getVehicleBrand() {
+        return vehicleBrand;
     }
 
-    public String getVmodel() {
-        return vmodel;
+    public String getVehicleModel() {
+        return vehicleModel;
     }
 
-    public String getVseating() {
-        return vseating;
+    public String getSeat() {
+        return seat;
     }
 
     @Override
     public String toString() {
         return "Booking{" +
-                "bookingNumber='" + bookingNumber + '\'' +
-                ", customerRegNo='" + customerRegNo + '\'' +
+                "bookingId='" + bookingId + '\'' +
+                ", customerId='" + customerId + '\'' +
                 ", customerName='" + customerName + '\'' +
                 ", customerAddress='" + customerAddress + '\'' +
-                ", telephoneNumber='" + telephoneNumber + '\'' +
+                ", telephoneNo='" + telephoneNo + '\'' +
                 ", destination='" + destination + '\'' +
                 ", bookingDate=" + bookingDate +
+                ", pickupLocation=" + pickupLocation +
                 ", vehicleType='" + vehicleType + '\'' +
-                ", vehicleRegId='" + vehicleRegId + '\'' +
-                ", vbrand='" + vbrand + '\'' +
-                ", vmodel='" + vmodel + '\'' +
-                ", vseating='" + vseating + '\'' +
+                ", vehicleId='" + vehicleId + '\'' +
+                ", vehicleBrand='" + vehicleBrand + '\'' +
+                ", vehicleModel='" + vehicleModel + '\'' +
+                ", seat='" + seat + '\'' +
                 '}';
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(bookingNumber);
+        return Objects.hash(bookingId);
     }
 
     @Override
@@ -114,29 +136,30 @@ public class Booking {
         if (this == obj) return true;
         if (!(obj instanceof Booking)) return false;
         Booking other = (Booking) obj;
-        return Objects.equals(bookingNumber, other.bookingNumber);
+        return Objects.equals(bookingId, other.bookingId);
     }
 
     public static class Builder {
-        private final String bookingNumber;
+        private final String bookingId;
         private String customerName;
         private String customerAddress;
-        private String telephoneNumber;
+        private String telephoneNo;
         private String destination;
         private Date bookingDate;
-        private String customerRegNo;
+        private String customerId;
         // New fields for vehicle details
         private String vehicleType;
-        private String vehicleRegId;
-        private String vbrand;
-        private String vmodel;
-        private String vseating;
+        private String vehicleId;
+        private String vehicleBrand;
+        private String vehicleModel;
+        private String seat;
+        private String pickupLocation;
 
-        public Builder(String bookingNumber) {
-            if (bookingNumber == null || bookingNumber.trim().isEmpty()) {
+        public Builder(String bookingId) {
+            if (bookingId == null || bookingId.trim().isEmpty()) {
                 throw new IllegalArgumentException("Booking number cannot be null or empty.");
             }
-            this.bookingNumber = bookingNumber;
+            this.bookingId = bookingId;
         }
 
         public Builder customerName(String customerName) {
@@ -149,8 +172,8 @@ public class Booking {
             return this;
         }
 
-        public Builder telephoneNumber(String telephoneNumber) {
-            this.telephoneNumber = telephoneNumber;
+        public Builder telephoneNo(String telephoneNo) {
+            this.telephoneNo = telephoneNo;
             return this;
         }
 
@@ -164,8 +187,13 @@ public class Booking {
             return this;
         }
         
-        public Builder customerRegNo(String customerRegNo) {
-            this.customerRegNo = customerRegNo;
+             public Builder pickupLocation(String pickupLocation) {
+            this.pickupLocation = pickupLocation;
+            return this;
+        }
+        
+        public Builder customerId(String customerId) {
+            this.customerId = customerId;
             return this;
         }
 
@@ -175,23 +203,23 @@ public class Booking {
             return this;
         }
 
-        public Builder vehicleRegId(String vehicleRegId) {
-            this.vehicleRegId = vehicleRegId;
+        public Builder vehicleId(String vehicleId) {
+            this.vehicleId = vehicleId;
             return this;
         }
 
-        public Builder vbrand(String vbrand) {
-            this.vbrand = vbrand;
+        public Builder vehicleBrand(String vehicleBrand) {
+            this.vehicleBrand = vehicleBrand;
             return this;
         }
 
-        public Builder vmodel(String vmodel) {
-            this.vmodel = vmodel;
+        public Builder vehicleModel(String vehicleModel) {
+            this.vehicleModel = vehicleModel;
             return this;
         }
 
-        public Builder vseating(String vseating) {
-            this.vseating = vseating;
+        public Builder seat(String seat) {
+            this.seat = seat;
             return this;
         }
 

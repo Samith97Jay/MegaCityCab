@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package com.megacitycab.service;
 
 import com.megacitycab.dao.CustomerDAO;
@@ -23,9 +19,9 @@ public class VehicleService {
     }
 
   
-    public boolean registerVehicle(String vehicleType, String vehicleId, String licensePlate,
+    public boolean registerVehicle(String vehicleType, String vehicleId, String lisce,
                                    String vehicleModel, String vehicleBrand, String color, int seat) throws ClassNotFoundException, SQLException {
-        int result = vehicledao.insertVehicle(vehicleType, vehicleId, licensePlate, vehicleModel, vehicleBrand, color, seat);
+        int result = vehicledao.insertVehicle(vehicleType, vehicleId, lisce, vehicleModel, vehicleBrand, color, seat);
         return result > 0;
     }
 

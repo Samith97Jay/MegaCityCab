@@ -8,8 +8,8 @@ public class Driver {
  
     private final String driverId;
     private final String name;
-    private final String licenseNumber; 
-    private final String phone;
+    private final String lisce; 
+    private final String phoneno;
     private final String address;
     private final String assignedVehicleId; 
 
@@ -17,8 +17,8 @@ public class Driver {
     private Driver(Builder builder) {
         this.driverId = builder.driverId;
         this.name = builder.name;
-        this.licenseNumber = builder.licenseNumber;
-        this.phone = builder.phone;
+        this.lisce = builder.lisce;
+        this.phoneno = builder.phoneno;
         this.address = builder.address;
         this.assignedVehicleId = builder.assignedVehicleId;
     }
@@ -32,12 +32,12 @@ public class Driver {
         return name;
     }
 
-    public String getLicenseNumber() {
-        return licenseNumber;
+    public String getLisce() {
+        return lisce;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getPhoneno() {
+        return phoneno;
     }
 
     public String getAddress() {
@@ -53,8 +53,8 @@ public class Driver {
         return "Driver{" +
                 "driverId='" + driverId + '\'' +
                 ", name='" + name + '\'' +
-                ", licenseNumber='" + licenseNumber + '\'' +
-                ", phone='" + phone + '\'' +
+                ", lisce='" + lisce + '\'' +
+                ", phoneno='" + phoneno + '\'' +
                 ", address='" + address + '\'' +
                 ", assignedVehicleId='" + assignedVehicleId + '\'' +
                 '}';
@@ -79,8 +79,8 @@ public class Driver {
         private final String driverId;
       
         private String name;
-        private String licenseNumber;
-        private String phone;
+        private String lisce;
+        private String phoneno;
         private String address;
         private String assignedVehicleId;
 
@@ -97,13 +97,13 @@ public class Driver {
             return this;
         }
 
-        public Builder licenseNumber(String licenseNumber) {
-            this.licenseNumber = licenseNumber;
+        public Builder lisce(String lisce) {
+            this.lisce = lisce;
             return this;
         }
 
-        public Builder phone(String phone) {
-            this.phone = phone;
+        public Builder phoneno(String phoneno) {
+            this.phoneno = phoneno;
             return this;
         }
 
@@ -121,5 +121,7 @@ public class Driver {
         public Driver build() {
             return new Driver(this);
         }
+
+      
     }
 }

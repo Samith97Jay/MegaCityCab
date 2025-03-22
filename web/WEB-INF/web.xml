@@ -8,6 +8,10 @@
         <servlet-name>SigninServlet</servlet-name>
         <servlet-class>com.megacitycab.controller.SigninServlet</servlet-class>
     </servlet>
+    <servlet>
+        <servlet-name>Billing</servlet-name>
+        <servlet-class>com.megacitycab.controller.BillingServlet</servlet-class>
+    </servlet>
     <servlet-mapping>
         <servlet-name>UserServlet</servlet-name>
         <url-pattern>/UserServlet</url-pattern>
@@ -15,6 +19,10 @@
     <servlet-mapping>
         <servlet-name>SigninServlet</servlet-name>
         <url-pattern>/SigninServlet</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>Billing</servlet-name>
+        <url-pattern>/Billing</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>

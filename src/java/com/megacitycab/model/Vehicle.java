@@ -12,72 +12,98 @@ import java.util.Objects;
  * @author OZT00090
  */
 public class Vehicle {
-    
-     private final String vehicleType;     // Type of the vehicle (Vehicle, SUV, Van, Bus)
-    private final String vehicleId;    // Auto-generated unique registration ID
-    private final String licensePlate;    // License plate number
-    private final String vehicleModel;           // Model of the vehicle
-    private final String vehicleBrand;           // Brand or manufacturer
-    private final String color;           // Color of the vehicle
-    private final int seat;    // Number of seats available
 
-    /**
-     * Private constructor to enforce object creation via the Builder.
-     *
-     * @param builder the Builder instance containing vehicle data.
-     */
-    private Vehicle(Builder builder) {
+    
+    
+    private final String vehicleType;    
+    private final  String vehicleId;    
+    private final String lisce;   
+    private final String vehicleModel;           
+    private final String vehicleBrand;           
+    private final int seat;    
+    private final String color;
+    private final String driverId;
+    
+    
+     private Vehicle(Builder builder) {
         this.vehicleType = builder.vehicleType;
         this.vehicleId = builder.vehicleId;
-        this.licensePlate = builder.licensePlate;
+        this.lisce = builder.lisce;
         this.vehicleModel = builder.vehicleModel;
         this.vehicleBrand = builder.vehicleBrand;
-        this.color = builder.color;
         this.seat = builder.seat;
+        this.color = builder.color;
+        this.driverId = builder.driverId;
     }
 
-    // Getters for all fields (no setters to preserve immutability)
-    public String getVehicleType() {
-        return vehicleType;
+    public String getDriverId() {
+        return driverId;
     }
 
+
+
+  
+    
     public String getVehicleId() {
         return vehicleId;
     }
 
-    public String getLicensePlate() {
-        return licensePlate;
+   
+
+    public String getLisce() {
+        return lisce;
     }
+
+ 
 
     public String getVehicleModel() {
         return vehicleModel;
     }
 
+ 
+
     public String getVehicleBrand() {
         return vehicleBrand;
     }
 
+   
+    public int getSeat() {
+        return seat;
+    }
+
+ 
     public String getColor() {
         return color;
     }
 
-    public int getSeat() {
-        return seat;
+ 
+    
+  
+
+
+    public String getVehicleType() {
+        return vehicleType;
     }
+
+  
+
+   
 
     @Override
     public String toString() {
         return "Vehicle{" +
                 "vehicleType='" + vehicleType + '\'' +
                 ", vehicleId='" + vehicleId + '\'' +
-                ", licensePlate='" + licensePlate + '\'' +
+                ", lisce='" + lisce + '\'' +
                 ", vehicleModel='" + vehicleModel + '\'' +
                 ", vehicleBrand='" + vehicleBrand + '\'' +
                 ", color='" + color + '\'' +
                 ", seat=" + seat +
-                '}';
-    }
-
+                ", driverId='" + driverId + '\'' +
+                 '}';
+    } 
+    
+    
     @Override
     public int hashCode() {
         return Objects.hash(vehicleId);
@@ -90,44 +116,49 @@ public class Vehicle {
         Vehicle other = (Vehicle) obj;
         return Objects.equals(this.vehicleId, other.vehicleId);
     }
+    
+    
+    
 
-    /**
-     * Builder class for constructing Vehicle instances.
-     * 
-     * This follows the Builder design pattern, providing a clear and flexible
-     * approach to constructing immutable Vehicle objects.
-     */
-    public static class Builder {
-        // Required attributes
-        private final String vehicleType;
-        private final String vehicleId;
+       public static class Builder {
         
-        // Optional attributes
-        private String licensePlate;
+        private final String vehicleId;
+        // Optional attributes.
+        private String vehicleType;
+        
         private String vehicleModel;
         private String vehicleBrand;
         private String color;
         private int seat;
+     
+        private String lisce;
+        private String driverId;
 
         /**
-         * Builder constructor with the required fields.
+         * Builder constructor with the required vehicleId.
          *
-         * @param vehicleType  the type of the vehicle (must not be null or empty)
-         * @param vehicleId the auto-generated vehicle registration ID (must not be null or empty)
+         * @param vehicleId the unique registration number of the vehicle.
+         * @throws IllegalArgumentException if vehicleId is null or empty.
          */
-        public Builder(String vehicleType, String vehicleId) {
-            if (vehicleType == null || vehicleType.trim().isEmpty()) {
-                throw new IllegalArgumentException("Vehicle type cannot be null or empty.");
-            }
+        public Builder(String vehicleId,String vehicleType) {
             if (vehicleId == null || vehicleId.trim().isEmpty()) {
-                throw new IllegalArgumentException("Vehicle Registration ID cannot be null or empty.");
+                throw new IllegalArgumentException("Vehicle Id cannot be null or empty.");
             }
-            this.vehicleType = vehicleType;
+            
+             if (vehicleType == null || vehicleType.trim().isEmpty()) {
+                throw new IllegalArgumentException("Vehicle Type cannot be null or empty.");
+            }
             this.vehicleId = vehicleId;
+            this.vehicleType = vehicleType;
         }
 
-        public Builder licensePlate(String licensePlate) {
-            this.licensePlate = licensePlate;
+     
+        
+  
+        
+
+        public Builder lisce(String lisce) {
+            this.lisce = lisce;
             return this;
         }
 
@@ -140,25 +171,42 @@ public class Vehicle {
             this.vehicleBrand = vehicleBrand;
             return this;
         }
-
-        public Builder color(String color) {
+        
+        
+         public Builder color(String color) {
             this.color = color;
             return this;
         }
-
-        public Builder seat(int seat) {
+         
+         public Builder seat(int seat) {
             this.seat = seat;
             return this;
         }
 
-        /**
-         * Builds the Vehicle instance with the provided values.
-         *
-         * @return a new Vehicle object.
-         */
-        public Vehicle build() {
-            return new Vehicle(this);
+     public Builder driverId(String driverId) {
+            this.driverId = driverId;
+            return this;
         }
+
+
+
+
+
+        /**
+         * Builds and returns a new Customer instance.
+         *
+         * @return a Customer object constructed with the Builder's parameters.
+         */
+         
+         public Vehicle build(){
+         return new Vehicle(this);
+                 }
+
+      
+        
+   
+       
     }
-    
 }
+
+

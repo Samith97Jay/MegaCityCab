@@ -1,31 +1,25 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.megacitycab.controller;
 
 import com.megacitycab.model.Booking;
 import com.megacitycab.service.BookingService;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author OZT00090
- */
+@WebServlet("/BookingServlet")
 public class BookingServlet extends HttpServlet {
- private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
     private BookingService bookingService;
+    
 
     @Override
     public void init() throws ServletException {
@@ -37,98 +31,103 @@ public class BookingServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String action = request.getParameter("action");
-        if ("list".equalsIgnoreCase(action)) {
-            List<Booking> bookings = null;
-            try {
-                bookings = bookingService.getAllBookings();
-            } catch (ClassNotFoundException ex) {
-                Logger.getLogger(BookingServlet.class.getName()).log(Level.SEVERE, null, ex);
-            }
-            if (bookings != null && !bookings.isEmpty()) {
+        
+        try {
+            if ("list".equalsIgnoreCase(action)) {
+                List<Booking> bookings = bookingService.getAllBookings();
                 request.setAttribute("bookings", bookings);
-            } else {
-                request.setAttribute("errorMessage", "No bookings found.");
-            }
-        } else {
-            String bookingNumber = request.getParameter("bookingNumber");
-            if (bookingNumber != null && !bookingNumber.trim().isEmpty()) {
-                Booking booking = null;
-                try {
-                    booking = bookingService.getBooking(bookingNumber);
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(BookingServlet.class.getName()).log(Level.SEVERE, null, ex);
+                request.getRequestDispatcher("viewbookings.jsp").forward(request, response);
+                
+            } else if ("delete".equalsIgnoreCase(action)) {
+                String bookingId = request.getParameter("bookingId");
+                if (bookingId != null && !bookingId.trim().isEmpty()) {
+                    boolean isDeleted = bookingService.deleteBooking(bookingId);
+                    request.setAttribute("message", isDeleted ? "Booking deleted successfully." : "Failed to delete booking.");
+                } else {
+                    request.setAttribute("errorMessage", "Booking ID is required to delete booking.");
                 }
-                request.setAttribute("booking", booking);
+                
+                request.setAttribute("bookings", bookingService.getAllBookings());
+                request.getRequestDispatcher("viewbookings.jsp").forward(request, response);
+                
             } else {
-                request.setAttribute("errorMessage", "Booking number is required to view booking details.");
+                String bookingNumber = request.getParameter("bookingId");
+                if (bookingNumber != null && !bookingNumber.trim().isEmpty()) {
+                    Booking booking = bookingService.getBooking(bookingNumber);
+                    request.setAttribute("booking", booking);
+                } else {
+                    request.setAttribute("errorMessage", "Booking ID is required to view booking details.");
+                }
+                request.getRequestDispatcher("viewbookings.jsp").forward(request, response);
             }
+        } catch (ClassNotFoundException e) {
+            Logger.getLogger(BookingServlet.class.getName()).log(Level.SEVERE, null, e);
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "An error occurred while processing your request.");
         }
-        request.getRequestDispatcher("displayingBookings.jsp").forward(request, response);
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String bookingNumber = request.getParameter("bookingNumber");
-        String customerName = request.getParameter("customerName");
-        String customerAddress = request.getParameter("pickupLocation");
-        String telephoneNumber = request.getParameter("telephoneNumber");
+        String bookingNumber = request.getParameter("bookingId");
+        String customerName = request.getParameter("name");
+        String customerAddress = request.getParameter("customerAddress");
+        String pickupLocation = request.getParameter("pickupLocation");
+        String telephoneNo = request.getParameter("phoneno");
         String destination = request.getParameter("destination");
         String bookingDateStr = request.getParameter("bookingDate");
-        String customerRegNo = request.getParameter("customerRegNo");
+        String customerId = request.getParameter("custId");
         
-         // New vehicle fields from the form:
         String vehicleType = request.getParameter("vehicleType");
-        String vehicleRegId = request.getParameter("vehicleRegId");
-        String vbrand = request.getParameter("brand");
-        String vmodel = request.getParameter("model");
-        String vseating = request.getParameter("seatingCapacity");
+        String vehicleId = request.getParameter("vehicleId");
+        String vehicleBrand = request.getParameter("vehicleBrand");
+        String vehicleModel = request.getParameter("vehicleModel");
+        String seat = request.getParameter("seat");
 
-        // Pre-insert validation (ensure required fields are provided)
         if (customerName == null || customerName.trim().isEmpty() ||
-            telephoneNumber == null || telephoneNumber.trim().isEmpty()) {
-            request.setAttribute("errorMessage", "Customer details are missing. Please ensure the registration number is valid.");
+            telephoneNo == null || telephoneNo.trim().isEmpty()) {
+            request.setAttribute("errorMessage", "Customer details are missing. Please provide required information.");
             request.getRequestDispatcher("booking.jsp").forward(request, response);
             return;
         }
 
-        Date bookingDate = null;
-        if (bookingDateStr != null && !bookingDateStr.trim().isEmpty()) {
-            try {
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                bookingDate = sdf.parse(bookingDateStr);
-            } catch (Exception ex) {
-                bookingDate = new Date();
-            }
-        } else {
-            bookingDate = new Date();
-        }
-
+        Date bookingDate = parseDate(bookingDateStr);
+        
         Booking booking = new Booking.Builder(bookingNumber)
                 .customerName(customerName)
                 .customerAddress(customerAddress)
-                .telephoneNumber(telephoneNumber)
+                .pickupLocation(pickupLocation)
+                .telephoneNo(telephoneNo)
                 .destination(destination)
-                .bookingDate((java.sql.Date) bookingDate)
-                .customerRegNo(customerRegNo)
+                .bookingDate(new java.sql.Date(bookingDate.getTime()))
+                .customerId(customerId)
                 .vehicleType(vehicleType)
-                .vehicleRegId(vehicleRegId)
-                .vbrand(vbrand)
-                .vmodel(vmodel)
-                .vseating(vseating)
+                .vehicleId(vehicleId)
+                .vehicleBrand(vehicleBrand)
+                .vehicleModel(vehicleModel)
+                .seat(seat)
                 .build();
 
-        boolean isAdded = false;
-     try {
-         isAdded = bookingService.addBooking(booking);
-     } catch (ClassNotFoundException ex) {
-         Logger.getLogger(BookingServlet.class.getName()).log(Level.SEVERE, null, ex);
-     }
-        if (isAdded) {
-            request.setAttribute("message", "Booking added successfully.");
-        } else {
-            request.setAttribute("errorMessage", "Failed to add booking.");
+        try {
+            boolean isAdded = bookingService.addBooking(booking);
+            request.setAttribute("message", isAdded ? "Booking added successfully." + bookingNumber : "Failed to add booking.");
+        } catch (ClassNotFoundException e) {
+            Logger.getLogger(BookingServlet.class.getName()).log(Level.SEVERE, null, e);
+            request.setAttribute("errorMessage", "An error occurred while adding booking.");
         }
+        
         request.getRequestDispatcher("booking.jsp").forward(request, response);
+    }
+
+    private Date parseDate(String dateStr) {
+        if (dateStr == null || dateStr.trim().isEmpty()) {
+            return new Date();
+        }
+        try {
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+            return sdf.parse(dateStr);
+        } catch (ParseException e) {
+            return new Date();
+        }
     }
 }

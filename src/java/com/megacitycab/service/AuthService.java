@@ -20,7 +20,7 @@ public class AuthService {
     }
 
     public boolean authenticate(String uname, String pwd) throws SQLException, ClassNotFoundException {
-        // Trim input to remove accidental spaces
+ 
         uname = uname != null ? uname.trim() : "";
         pwd = pwd != null ? pwd.trim() : "";
 

@@ -9,18 +9,21 @@ import com.megacitycab.model.Vehicle;
 import com.megacitycab.service.VehicleService;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author OZT00090
- */
+
+@WebServlet("/VehicleServlet")
 public class VehicleServlet extends HttpServlet {
 
   private VehicleService vehicleService;
+    private int seat;
 
     @Override
     public void init() throws ServletException {
@@ -44,12 +47,12 @@ public class VehicleServlet extends HttpServlet {
                     StringBuilder json = new StringBuilder();
                     json.append("{");
                     json.append("\"vehicleType\":\"").append(vehicle.getVehicleType()).append("\",");
-                    json.append("\"vehicleRegId\":\"").append(vehicle.getVehicleRegId()).append("\",");
-                    json.append("\"licensePlate\":\"").append(vehicle.getLicensePlate()).append("\",");
-                    json.append("\"model\":\"").append(vehicle.getModel()).append("\",");
-                    json.append("\"brand\":\"").append(vehicle.getBrand()).append("\",");
+                    json.append("\"vehicleId\":\"").append(vehicle.getVehicleId()).append("\",");
+                    json.append("\"lisce\":\"").append(vehicle.getLisce()).append("\",");
+                    json.append("\"vehicleModel\":\"").append(vehicle.getVehicleModel()).append("\",");
+                    json.append("\"vehicleBrand\":\"").append(vehicle.getVehicleBrand()).append("\",");
                     json.append("\"color\":\"").append(vehicle.getColor()).append("\",");
-                    json.append("\"seatingCapacity\":").append(vehicle.getSeatingCapacity());
+                    json.append("\"seat\":").append(vehicle.getSeat());
                     json.append("}");
                     out.write(json.toString());
                 } else {
@@ -63,12 +66,12 @@ public class VehicleServlet extends HttpServlet {
                     StringBuilder json = new StringBuilder();
                     json.append("{");
                     json.append("\"vehicleType\":\"").append(vehicle.getVehicleType()).append("\",");
-                    json.append("\"vehicleRegId\":\"").append(vehicle.getVehicleRegId()).append("\",");
-                    json.append("\"licensePlate\":\"").append(vehicle.getLicensePlate()).append("\",");
-                    json.append("\"model\":\"").append(vehicle.getModel()).append("\",");
-                    json.append("\"brand\":\"").append(vehicle.getBrand()).append("\",");
+                    json.append("\"vehicleId\":\"").append(vehicle.getVehicleId()).append("\",");
+                    json.append("\"lisce\":\"").append(vehicle.getLisce()).append("\",");
+                    json.append("\"vehicleModel\":\"").append(vehicle.getVehicleModel()).append("\",");
+                    json.append("\"vehicleBrand\":\"").append(vehicle.getVehicleBrand()).append("\",");
                     json.append("\"color\":\"").append(vehicle.getColor()).append("\",");
-                    json.append("\"seatingCapacity\":").append(vehicle.getSeatingCapacity());
+                    json.append("\"seat\":").append(vehicle.getSeat());
                     json.append("}");
                     out.write(json.toString());
                 } else {
@@ -84,5 +87,39 @@ public class VehicleServlet extends HttpServlet {
             out.flush();
             out.close();
         }
+    }
+    
+    @Override
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // Retrieve parameters from the form
+        String vehicleType = request.getParameter("vehicleType");
+        String vehicleId = request.getParameter("vehicleId");
+        String lisce = request.getParameter("lisce");
+        String vehicleModel = request.getParameter("vehicleModel");
+        String vehicleBrand = request.getParameter("vehicleBrand");
+        String color = request.getParameter("color");
+        int seat = 0;
+        try {
+            seat= Integer.parseInt(request.getParameter("seat"));
+        } catch (NumberFormatException e) {
+            // Handle if seatingCapacity is not provided or is invalid
+        }
+
+        // Call service to register the vehicle
+        boolean isRegistered = false;
+      try {
+          isRegistered = vehicleService.registerVehicle(vehicleType, vehicleId, lisce, vehicleModel, vehicleBrand, color, seat);
+      } catch (ClassNotFoundException ex) {
+          Logger.getLogger(VehicleServlet.class.getName()).log(Level.SEVERE, null, ex);
+      } catch (SQLException ex) {
+          Logger.getLogger(VehicleServlet.class.getName()).log(Level.SEVERE, null, ex);
+      }
+
+        if(isRegistered){
+            request.setAttribute("message", "Vehicle registered successfully with Registration ID: " + vehicleId);
+        } else {
+            request.setAttribute("errorMessage", "Vehicle registration failed. Please try again.");
+        }
+        request.getRequestDispatcher("vehicleReg.jsp").forward(request, response);
     }
 }
