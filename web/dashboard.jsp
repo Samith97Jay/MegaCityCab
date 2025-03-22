@@ -165,7 +165,7 @@
         <div class="dropdown">
         <a href="javascript:void(0);" class="dropbtn"><i class="fas fa-user"></i> Register <i class="fas fa-caret-down"></i></a>
         <div class="dropdown-content">
-            <a href="customerReg.jsp">Driver</a>
+            <a href="driverReg.jsp">Driver</a>
             <a href="vehicleReg.jsp">Vehicle</a>
             <a href="customerReg.jsp">Customer</a>
         </div>

@@ -4,187 +4,189 @@
 <head>
     <title>Search &amp; Edit Record</title>
     <style>
-        /* Global Reset */
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f2f2f2;
-            display: flex;
-            justify-content: center;
-            align-items: flex-start;
-            padding: 20px;
-        }
-        .container {
-            background: #fff;
-            padding: 2rem;
-            border-radius: 8px;
-            width: 600px;
-            max-width: 100%;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            margin-top: 90px;
-        }
-        h2 {
-            text-align: center;
-            margin-bottom: 1.5rem;
-            color: #333;
-        }
-        .search-section {
-            text-align: center;
-            margin-bottom: 2rem;
-        }
-        .search-section input[type="text"] {
-            width: 75%;
-            padding: 0.75rem;
-            font-size: 1rem;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        .search-section button {
-            padding: 0.75rem 1.5rem;
-            background: #5563DE;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            font-size: 1rem;
-            margin-left: 10px;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-        .search-section button:hover {
-            background: #444fb7;
-        }
-        .form-section {
-            margin-top: 20px;
-        }
-        .form-section label {
-            font-weight: bold;
-            margin-bottom: 0.5rem;
-            display: block;
-            color: #555;
-        }
-        .form-section input[type="text"],
-        .form-section input[type="number"] {
-            width: 100%;
-            padding: 0.75rem;
-            margin-bottom: 1rem;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 1rem;
-        }
-        .form-section input[readonly] {
-            background: #e9e9e9;
-        }
-        .form-section button {
-            width: 100%;
-            padding: 0.75rem;
-            background: #5563DE;
-            color: #fff;
-            border: none;
-            border-radius: 4px;
-            font-size: 1rem;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-        .form-section button:hover {
-            background: #444fb7;
-        }
-        .message, .errorMessage {
-            text-align: center;
-            margin-bottom: 1rem;
-            font-size: 1rem;
-        }
-        .message { color: green; }
-        .errorMessage { color: red; }
-        /* Navigation styling */
-        header.navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: #fff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            padding: 1rem 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            z-index: 1000;
-        }
-        header.navbar .brand {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #333;
-            text-decoration: none;
-        }
-        header.navbar .nav-links {
-            display: flex;
-            gap: 1rem;
-        }
-        header.navbar .nav-links a {
-            color: #5563DE;
-            text-decoration: none;
-            font-size: 1rem;
-            transition: color 0.3s;
-        }
-        header.navbar .nav-links a:hover {
-            color: #444;
-        }
-        /* Style for the Dashboard link with icon */
-        header.navbar .nav-links a[href="dashboard.jsp"] {
-          position: relative;
-          padding-left: 30px; /* space for the icon */
-          background: url('https://img.icons8.com/?size=100&id=S5D5w5vFLhYp&format=png&color=000000') no-repeat left center;
-          background-size: 20px 20px;
-        }
+       * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+body {
+    font-family: 'Poppins', sans-serif;
+    background: url('img/car-bg.jpg') no-repeat center center/cover;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 20px;
+    height: 100vh;
+}
 
-        /* Tooltip styling on hover */
-        header.navbar .nav-links a[href="dashboard.jsp"]:hover::after {
-          content: 'Dashboard';
-          position: absolute;
-          bottom: -30px; /* position tooltip below the link */
-          left: 50%;
-          transform: translateX(-50%);
-          background: #333;
-          color: #fff;
-          padding: 4px 8px;
-          border-radius: 4px;
-          font-size: 0.85rem;
-          white-space: nowrap;
-          opacity: 0;
-          transition: opacity 0.3s;
-          pointer-events: none;
-        }
+/* Container Styling */
+.container {
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2rem;
+    border-radius: 10px;
+    width: 500px;
+    max-width: 100%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    margin-top: 100px;
+}
 
-        /* Make tooltip visible on hover */
-        header.navbar .nav-links a[href="dashboard.jsp"]:hover::after {
-          opacity: 1;
-        }
-        
-        /* Style for the Dashboard link with icon */
-        header.navbar .nav-links a[href="index.jsp"] {
-          position: relative;
-          padding-left: 30px; /* space for the icon */
-          background: url('https://img.icons8.com/?size=100&id=111473&format=png&color=000000') no-repeat left center;
-          background-size: 20px 20px;
-        }
+/* Titles */
+h2 {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    color: #333;
+}
 
-        /* Tooltip styling on hover */
-        header.navbar .nav-links a[href="index.jsp"]:hover::after {
-          content: 'Dashboard';
-          position: absolute;
-          bottom: -30px; /* position tooltip below the link */
-          left: 50%;
-          transform: translateX(-50%);
-          background: #333;
-          color: #fff;
-          padding: 4px 8px;
-          border-radius: 4px;
-          font-size: 0.85rem;
-          white-space: nowrap;
-          opacity: 0;
-          transition: opacity 0.3s;
-          pointer-events: none;
-        }
+/* Search Section */
+.search-section {
+    text-align: center;
+    margin-bottom: 2rem;
+}
+.search-section input[type="text"] {
+    width: 75%;
+    padding: 0.75rem;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+.search-section button {
+    padding: 0.75rem 1.5rem;
+    background: #ffcc00;
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    margin-left: 10px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+.search-section button:hover {
+    background: #e6b800;
+}
 
+/* Form Section */
+.form-section {
+    margin-top: 20px;
+}
+.form-section label {
+    font-weight: bold;
+    margin-bottom: 0.5rem;
+    display: block;
+    color: #555;
+}
+.form-section input[type="text"],
+.form-section input[type="number"] {
+    width: 100%;
+    padding: 0.75rem;
+    margin-bottom: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1rem;
+}
+.form-section input[readonly] {
+    background: #e9e9e9;
+}
+
+/* Button Styling */
+.form-section button {
+    width: 100%;
+    padding: 0.8rem;
+    background: #ffcc00;
+    color: #333;
+    border: none;
+    border-radius: 5px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+.form-section button:hover {
+    background: #e6b800;
+}
+
+/* Messages */
+.message, .errorMessage {
+    text-align: center;
+    margin-bottom: 1rem;
+    font-size: 1rem;
+}
+.message {
+    color: green;
+}
+.errorMessage {
+    color: red;
+}
+
+/* Navigation Bar */
+.navbar {
+    background: rgba(0, 0, 0, 0.9);
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
+.navbar .brand {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #ffcc00;
+    text-decoration: none;
+    transition: 0.3s;
+}
+.navbar .brand:hover {
+    color: #ffd633;
+}
+
+/* Nav Links */
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+.nav-links a {
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 10px 15px;
+    position: relative;
+    transition: color 0.3s ease;
+}
+.nav-links a::after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 3px;
+    background: #ffcc00;
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: width 0.3s ease;
+}
+.nav-links a:hover {
+    color: #ffcc00;
+}
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+/* Footer */
+footer {
+    background: rgba(0, 0, 0, 0.9);
+    padding: 15px;
+    text-align: center;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+footer p {
+    margin: 0;
+    color: #fff;
+}
         /* Make tooltip visible on hover */
         header.navbar .nav-links a[href="index.jsp"]:hover::after {
           opacity: 1;
@@ -195,14 +197,13 @@
     <header class="navbar">
         <a class="brand" href="dashboard.jsp">Mega City Cab</a>
         <nav class="nav-links">
-            <a href="booking.jsp">New Booking</a>
+           <a href="booking.jsp">New Booking</a>
             <a href="BookingServlet?action=list">View Bookings</a>
             <a href="register.jsp">Registration</a>
             <a href="retrive.jsp">View</a>
             <a href="billing.jsp">Billing</a>
-            <a href="help.jsp">Help</a>
-            <a href="dashboard.jsp"></a>
-            <a href="index.jsp"></a>
+            <a href="guide.jsp">Guide</a>
+            <a href="dashboard.jsp">Home</a>
         </nav>
     </header>
     
@@ -211,7 +212,7 @@
     <!-- Search Section -->
     <div class="search-section">
         <form action="RetrivalServlet" method="get">
-            <input type="text" name="searchId" placeholder="Enter ID (e.g., CUS_123, DI456, V789 or NIC)" required />
+            <input type="text" name="searchId" placeholder="Enter ID" required />
             <button type="submit">Search</button>
         </form>
     </div>
@@ -231,7 +232,7 @@
             if(recordType.equals("customer")) {
                 com.megacitycab.model.Customer customer = (com.megacitycab.model.Customer) request.getAttribute("customer");
     %>
-                <h2>View/Edit Customer Details</h2>
+                <h2>Retrive and Update Customer Details</h2>
                 <div class="form-section">
                     <form action="RetrivalServlet" method="post">
                         <label>Registration Number</label>
@@ -251,66 +252,70 @@
                         
                         <button type="submit">Update Customer Details</button>
                     </form>
+                        
+                        
                 </div>
     <%
             } else if(recordType.equals("driver")) {
                 com.megacitycab.model.Driver driver = (com.megacitycab.model.Driver) request.getAttribute("driver");
     %>
-                <h2>View/Edit Driver Details</h2>
+                <h2>Retrive and Update Driver Details</h2>
                 <div class="form-section">
                     <form action="RetrivalServlet" method="post">
                         <label>Driver ID</label>
                         <input type="text" name="driverId" value="<%= driver.getDriverId() %>" readonly />
                         
                         <label>Driver Name</label>
-                        <input type="text" name="driverName" value="<%= driver.getName() %>" required />
+                        <input type="text" name="name" value="<%= driver.getName() %>" required />
                         
                         <label>Driver License Number</label>
-                        <input type="text" name="licenseNumber" value="<%= driver.getLicenseNumber() %>" required />
+                        <input type="text" name="lisce" value="<%= driver.getLisce() %>" required />
                         
                         <label>Driver Contact Number</label>
-                        <input type="text" name="phone" value="<%= driver.getPhone() %>" required />
+                        <input type="text" name="phoneno" value="<%= driver.getPhoneno() %>" required />
                         
                         <label>Driver Address</label>
-                        <input type="text" name="driverAddress" value="<%= driver.getAddress() %>" required />
+                        <input type="text" name="address" value="<%= driver.getAddress() %>" required />
                         
                         <label>Assigned Vehicle ID</label>
                         <input type="text" name="assignedVehicleId" value="<%= driver.getAssignedVehicleId() %>" required />
                         
                         <button type="submit">Update Driver Details</button>
                     </form>
+                        
+                        
                 </div>
     <%
             } else if(recordType.equals("vehicle")) {
                 com.megacitycab.model.Vehicle vehicle = (com.megacitycab.model.Vehicle) request.getAttribute("vehicle");
     %>
-          <%--      <h2>View/Edit Vehicle Details</h2>
+                <h2>Retrive and Update Vehicle Details</h2>
                 <div class="form-section">
-                    <form action="ViewEditServlet" method="post">
+                    <form action="RetrivalServlet" method="post">
                         <label>Vehicle Registration ID</label>
-                        <input type="text" name="vehicleRegId" value="<%= vehicle.getVehicleRegId() %>" readonly />
+                        <input type="text" name="vehicleId" value="<%= vehicle.getVehicleId() %>" readonly />
                         
                         <label>Vehicle Type</label>
                         <input type="text" name="vehicleType" value="<%= vehicle.getVehicleType() %>" required />
                         
                         <label>License Plate</label>
-                        <input type="text" name="licensePlate" value="<%= vehicle.getLicensePlate() %>" required />
+                        <input type="text" name="lisce" value="<%= vehicle.getLisce() %>" required />
                         
                         <label>Vehicle Brand</label>
-                        <input type="text" name="brand" value="<%= vehicle.getBrand() %>" required />
+                        <input type="text" name="vehicleBrand" value="<%= vehicle.getVehicleBrand() %>" required />
                         
                         <label>Vehicle Model</label>
-                        <input type="text" name="model" value="<%= vehicle.getModel() %>" required />
+                        <input type="text" name="vehicleModel" value="<%= vehicle.getVehicleModel() %>" required />
                         
                         <label>Vehicle Color</label>
                         <input type="text" name="color" value="<%= vehicle.getColor() %>" required />
                         
-                        <label>Vehicle Seating Capacity</label>
-                        <input type="number" name="seatingCapacity" value="<%= vehicle.getSeatingCapacity() %>" required />
+                        <label>Seat </label>
+                        <input type="number" name="seat" value="<%= vehicle.getSeat() %>" required />
                         
                         <button type="submit">Update Vehicle Details</button>
                     </form>
-                </div>--%>
+                </div>
     <%
             }
         }

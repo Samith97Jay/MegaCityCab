@@ -32,8 +32,8 @@ public class RetrivalServlet extends HttpServlet {
 
         if (searchId != null && !searchId.trim().isEmpty()) {
             try {
-                // Check for customer registration number (CUS_ prefix)
-                if (searchId.startsWith("CUS")) {
+               
+                if (searchId.startsWith("CU")) {
                     Customer customer = service.getCustomer(searchId);
                     if (customer != null) {
                         request.setAttribute("recordType", "customer");
@@ -42,8 +42,8 @@ public class RetrivalServlet extends HttpServlet {
                         request.setAttribute("errorMessage", "No customer record found for Customer Id " + searchId);
                     }
                 }
-                // Check for driver record (DI prefix)
-                else if (searchId.startsWith("DI")) {
+              
+                else if (searchId.startsWith("D")) {
                     Driver driver = service.getDriver(searchId);
                     if (driver != null) {
                         request.setAttribute("recordType", "driver");
@@ -52,9 +52,8 @@ public class RetrivalServlet extends HttpServlet {
                         request.setAttribute("errorMessage", "No driver record found for ID " + searchId);
                     }
                 }
-                // Check for vehicle record (prefixes: C, S, V, or B)
-                else if (searchId.startsWith("C") || searchId.startsWith("S") ||
-                         searchId.startsWith("V")) {
+                
+                else if (searchId.startsWith("V")) {
                     Vehicle vehicle = service.getVehicle(searchId);
                     if (vehicle != null) {
                         request.setAttribute("recordType", "vehicle");
@@ -112,8 +111,8 @@ public class RetrivalServlet extends HttpServlet {
                     request.setAttribute("errorMessage", "Driver deletion failed.");
                 }
             } else if (request.getParameter("deleteVehicle") != null) {
-                String vehicleRegId = request.getParameter("vehicleRegId");
-                deleteSuccess = service.deleteCar(vehicleRegId);
+                String vehicleId = request.getParameter("vehicleId");
+                deleteSuccess = service.deleteVehicle(vehicleId);
                 recordType = "vehicle";
                 if (deleteSuccess) {
                     request.setAttribute("message", "Vehicle removed successfully!");
@@ -149,17 +148,17 @@ public class RetrivalServlet extends HttpServlet {
                 // Update Driver record
                 String driverId = request.getParameter("driverId");
                 String driverName = request.getParameter("driverName");
-                String licenseNumber = request.getParameter("licenseNumber");
-                String phone = request.getParameter("phone");
+                String lisce = request.getParameter("lisce");
+                String phoneno = request.getParameter("phone");
                 String driverAddress = request.getParameter("driverAddress");
-                String assignedCarId = request.getParameter("assignedCarId");
+                String assignedVehicleId = request.getParameter("assignedVehicleId");
 
                 Driver updatedDriver = new Driver.Builder(driverId)
                         .name(driverName)
-                        .licenseNumber(licenseNumber)
-                        .phone(phone)
+                        .lisce(lisce)
+                        .phoneno(phoneno)
                         .address(driverAddress)
-                        .assignedCarId(assignedCarId)
+                        .assignedVehicleId(assignedVehicleId)
                         .build();
 
                 updateSuccess = service.updateDriver(updatedDriver);
@@ -170,44 +169,45 @@ public class RetrivalServlet extends HttpServlet {
                 } else {
                     request.setAttribute("errorMessage", "Driver record update failed.");
                 }
-            } else if (request.getParameter("vehicleRegId") != null && !request.getParameter("vehicleRegId").isEmpty()) {
+            }  else if (request.getParameter("vehicleId") != null && !request.getParameter("vehicleType").isEmpty()) {
                 // Update Vehicle record
-                String vehicleRegId = request.getParameter("vehicleRegId");
+                String vehicleId = request.getParameter("vehicleId");
                 String vehicleType = request.getParameter("vehicleType");
                 
                 // Validate vehicleType parameter
                 if (vehicleType == null || vehicleType.trim().isEmpty()) {
                     request.setAttribute("errorMessage", "Vehicle type cannot be null or empty.");
                     request.setAttribute("recordType", "vehicle");
-           //         request.setAttribute("car", service.getCar(vehicleRegId));
+                    request.setAttribute("vehicle", service.getVehicle(vehicleId));
                     request.getRequestDispatcher("retrive.jsp").forward(request, response);
                     return;
                 }
                 
-                String licensePlate = request.getParameter("licensePlate");
-                String model = request.getParameter("model");
-                String brand = request.getParameter("brand");
+                String lisce = request.getParameter("lisce");
+                String vehicleModel = request.getParameter("vehicleModel");
+                String vehicleBrand = request.getParameter("vehicleBrand");
                 String color = request.getParameter("color");
-                int seatingCapacity = 0;
+                int seat = 0;
                 try {
-                    seatingCapacity = Integer.parseInt(request.getParameter("seatingCapacity"));
+                    seat = Integer.parseInt(request.getParameter("seat"));
                 } catch (NumberFormatException e) {
                     // Handle invalid seating capacity input if needed.
                 }
                 String vehicleDriverId = request.getParameter("vehicleDriverId");
 
-      //          Car updatedCar = new Car.Builder(vehicleType, vehicleRegId)
-        //                .licensePlate(licensePlate)
-         //               .model(model)
-           //             .brand(brand)
-                //        .color(color)
-                     //   .seatingCapacity(seatingCapacity)
-                     //   .driverId(vehicleDriverId)
-                      //  .build();
+                Vehicle updatedVehicle;
+                updatedVehicle = new Vehicle.Builder(vehicleType, vehicleId)
+                        .lisce(lisce)
+                        .vehicleModel(vehicleModel)
+                        .vehicleBrand(vehicleBrand)
+                        .color(color)
+                        .seat(seat)
+                        .driverId(vehicleDriverId)
+                        .build();
 
-                updateSuccess = service.updateCar(updatedCar);
+                updateSuccess = service.updateVehicle(updatedVehicle);
                 recordType = "vehicle";
-              //  request.setAttribute("car", service.getCar(vehicleRegId));
+                request.setAttribute("car", service.getVehicle(vehicleId));
                 if (updateSuccess) {
                     request.setAttribute("message", "Vehicle record updated successfully!");
                 } else {
@@ -218,7 +218,6 @@ public class RetrivalServlet extends HttpServlet {
             e.printStackTrace();
             request.setAttribute("errorMessage", "Error processing request: " + e.getMessage());
         }
-
         request.setAttribute("recordType", recordType);
         request.getRequestDispatcher("retrive.jsp").forward(request, response);
     }

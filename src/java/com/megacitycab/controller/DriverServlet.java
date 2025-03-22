@@ -5,6 +5,7 @@
  */
 package com.megacitycab.controller;
 
+import com.megacitycab.model.Customer;
 import com.megacitycab.model.Driver;
 import com.megacitycab.service.DriverService;
 import java.io.IOException;
@@ -18,10 +19,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author OZT00090
- */
+
 @WebServlet("/DriverServlet")
 public class DriverServlet extends HttpServlet {
 
@@ -41,38 +39,42 @@ public class DriverServlet extends HttpServlet {
         // Retrieve form parameters.
         String driverId = request.getParameter("driverId");
         String name = request.getParameter("name");
-        String licenseNumber = request.getParameter("licenseNumber");
-        String phone = request.getParameter("phone");
+        String lisce = request.getParameter("lisce");
+        String phoneno = request.getParameter("phoneno");
         String address = request.getParameter("address");
         String assignedVehicleId = request.getParameter("assignedVehicleId");
+        
+          if (driverId == null || driverId.trim().isEmpty()) {
+            request.setAttribute("errorMessage", "Driver ID is required.");
+            request.getRequestDispatcher("driverReg.jsp").forward(request, response);
+            return;
+        }
+
 
         // Build a Driver instance using the Builder pattern.
         Driver driver = new Driver.Builder(driverId)
                 .name(name)
-                .licenseNumber(licenseNumber)
-                .phone(phone)
+                .lisce(lisce)
+                .phoneno(phoneno)
                 .address(address)
                 .assignedVehicleId(assignedVehicleId)
                 .build();
 
-        // Attempt to register the driver.
-        boolean isRegistered = false;
-     try {
-         isRegistered = driverService.registerDriver(driver);
-     } catch (SQLException ex) {
-         Logger.getLogger(DriverServlet.class.getName()).log(Level.SEVERE, null, ex);
-     } catch (ClassNotFoundException ex) {
-         Logger.getLogger(DriverServlet.class.getName()).log(Level.SEVERE, null, ex);
-     }
-
-        // Set a feedback message based on the outcome.
-        if(isRegistered) {
-            request.setAttribute("message", "Driver registered successfully!");
-        } else {
-            request.setAttribute("message", "Driver registration failed. Please try again.");
+        try {
+            boolean success = driverService.registerDriver(driver);
+            if (success) {
+                request.setAttribute("message", "Driver registered successfully with Driver ID: " + driverId);
+            } else {
+                request.setAttribute("errorMessage", "Failed to register driver. Please try again.");
+            }
+        } catch (SQLException | ClassNotFoundException ex) {
+          
+            request.setAttribute("errorMessage", "An error occurred while registering the driver.");
         }
+
         request.getRequestDispatcher("driverReg.jsp").forward(request, response);
     }
+
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

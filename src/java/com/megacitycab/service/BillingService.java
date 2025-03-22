@@ -40,7 +40,7 @@ public class BillingService {
      * DTO class to encapsulate billing details.
      */
     public static class BillingInfo {
-        private String bookingNumber;
+        private String bookingId;
         private String pickupLocation;
         private String destination;
         private double distance; // in miles
@@ -49,8 +49,8 @@ public class BillingService {
         private double taxAmount;
         private double totalAmount;
 
-        public BillingInfo(String bookingNumber, String pickupLocation, String destination) {
-            this.bookingNumber = bookingNumber;
+        public BillingInfo(String bookingId, String pickupLocation, String destination) {
+            this.bookingId = bookingId;
             this.pickupLocation = pickupLocation;
             this.destination = destination;
             this.distance = 0;
@@ -62,7 +62,7 @@ public class BillingService {
 
         // Getters and setters
         public String getBookingNumber() {
-            return bookingNumber;
+            return bookingId;
         }
 
         public String getpickupLocation() {
@@ -115,24 +115,24 @@ public class BillingService {
     }
 
     /**
-     * Returns a BillingInfo object with only bookingNumber, pickupLocation, destination
+     * Returns a BillingInfo object with only bookingId, pickupLocation, destination
      * (distance, cost, etc. remain zero). This is for preview before distance is known.
      *
-     * @param bookingNumber the booking number to look up
+     * @param bookingId the booking number to look up
      * @return a BillingInfo object, or null if not found
      */
-    public BillingInfo getBookingDetails(String bookingNumber) throws SQLException, ClassNotFoundException {
-        String sql = "SELECT bookingNumber, pickupLocation, destination FROM bookings WHERE bookingNumber = ?";
+    public BillingInfo getBookingDetails(String bookingId) throws SQLException, ClassNotFoundException {
+        String sql = "SELECT bookingId, pickupLocation, destination FROM bookings WHERE bookingId = ?";
         BillingInfo billingInfo = null;
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, bookingNumber);
+            stmt.setString(1, bookingId);
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    String dbBookingNumber = rs.getString("bookingNumber");
+                    String dbBookingNumber = rs.getString("bookingId");
                     String pickupLocation = rs.getString("pickupLocation");
                     String destination = rs.getString("destination");
 
@@ -150,22 +150,22 @@ public class BillingService {
     /**
      * Calculates the billing information using the manually provided distance.
      *
-     * @param bookingNumber  the unique booking identifier.
+     * @param bookingId  the unique booking identifier.
      * @param manualDistance the manually provided distance in miles.
      * @return a fully populated BillingInfo object, or null if the booking is not found
      */
-    public BillingInfo calculateBill(String bookingNumber, double manualDistance) throws SQLException, ClassNotFoundException {
-        String sql = "SELECT bookingNumber, pickupLocation, destination FROM bookings WHERE bookingNumber = ?";
+    public BillingInfo calculateBill(String bookingId, double manualDistance) throws SQLException, ClassNotFoundException {
+        String sql = "SELECT bookingId, pickupLocation, destination FROM bookings WHERE bookingId = ?";
         BillingInfo billingInfo = null;
 
         try (Connection conn = DBConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
-            stmt.setString(1, bookingNumber);
+            stmt.setString(1, bookingId);
 
             try (ResultSet rs = stmt.executeQuery()) {
                 if (rs.next()) {
-                    String dbBookingNumber = rs.getString("bookingNumber");
+                    String dbBookingNumber = rs.getString("bookingId");
                     String pickupLocation = rs.getString("pickupLocation");
                     String destination = rs.getString("destination");
 
@@ -188,7 +188,7 @@ public class BillingService {
                     billingInfo.setTaxAmount(taxAmount);
                     billingInfo.setTotalAmount(totalAmount);
                 } else {
-                    System.err.println("Booking not found for booking number: " + bookingNumber);
+                    System.err.println("Booking not found for booking number: " + bookingId);
                 }
             }
         } catch (SQLException ex) {

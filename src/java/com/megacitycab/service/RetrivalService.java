@@ -97,15 +97,27 @@ public class RetrivalService {
             return false;
         }
     }
-
-    public boolean deleteDriver(String driverId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+     
+         public boolean deleteDriver(String driverId) {
+        try {
+            return driverDAO.deleteDriver(driverId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+         
+           public boolean deleteVehicle(String vehicleId) {
+        try {
+            return vehicleDAO.deleteVehicle(vehicleId);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 
-    public boolean deleteCar(String vehicleRegId) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
 
 
+ 
 
 }

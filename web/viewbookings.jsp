@@ -9,170 +9,165 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         /* Reset default styles */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #f2f2f2;
-            padding: 2rem;
-        }
-        /* Navigation styling */
-        header.navbar {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            background: #fff;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            padding: 1rem 2rem;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            z-index: 1000;
-        }
-        header.navbar .brand {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #333;
-            text-decoration: none;
-        }
-        header.navbar .nav-links {
-            display: flex;
-            gap: 1rem;
-        }
-        header.navbar .nav-links a {
-            color: #5563DE;
-            text-decoration: none;
-            font-size: 1rem;
-            transition: color 0.3s;
-        }
-        header.navbar .nav-links a:hover {
-            color: #444;
-        }
-        /* Style for the Dashboard link with icon */
-        header.navbar .nav-links a[href="dashboard.jsp"] {
-          position: relative;
-          padding-left: 30px; /* space for the icon */
-          background: url('https://img.icons8.com/?size=100&id=S5D5w5vFLhYp&format=png&color=000000') no-repeat left center;
-          background-size: 20px 20px;
-        }
+       body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    padding: 0;
+    background: url('img/car-bg.jpg') no-repeat center center/cover;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
-        /* Tooltip styling on hover */
-        header.navbar .nav-links a[href="dashboard.jsp"]:hover::after {
-          content: 'Dashboard';
-          position: absolute;
-          bottom: -30px; /* position tooltip below the link */
-          left: 50%;
-          transform: translateX(-50%);
-          background: #333;
-          color: #fff;
-          padding: 4px 8px;
-          border-radius: 4px;
-          font-size: 0.85rem;
-          white-space: nowrap;
-          opacity: 0;
-          transition: opacity 0.3s;
-          pointer-events: none;
-        }
+/* Navigation Bar */
+.navbar {
+    background: rgba(0, 0, 0, 0.9);
+    padding: 15px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1000;
+}
 
-        /* Make tooltip visible on hover */
-        header.navbar .nav-links a[href="dashboard.jsp"]:hover::after {
-          opacity: 1;
-        }
-        
-        /* Style for the Dashboard link with icon */
-        header.navbar .nav-links a[href="index.jsp"] {
-          position: relative;
-          padding-left: 30px; /* space for the icon */
-          background: url('https://img.icons8.com/?size=100&id=111473&format=png&color=000000') no-repeat left center;
-          background-size: 20px 20px;
-        }
+.navbar .brand {
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #ffcc00;
+    text-decoration: none;
+    transition: 0.3s;
+}
 
-        /* Tooltip styling on hover */
-        header.navbar .nav-links a[href="index.jsp"]:hover::after {
-          content: 'Dashboard';
-          position: absolute;
-          bottom: -30px; /* position tooltip below the link */
-          left: 50%;
-          transform: translateX(-50%);
-          background: #333;
-          color: #fff;
-          padding: 4px 8px;
-          border-radius: 4px;
-          font-size: 0.85rem;
-          white-space: nowrap;
-          opacity: 0;
-          transition: opacity 0.3s;
-          pointer-events: none;
-        }
+.navbar .brand:hover {
+    color: #ffd633;
+}
 
-        /* Make tooltip visible on hover */
-        header.navbar .nav-links a[href="index.jsp"]:hover::after {
-          opacity: 1;
-        }
-        
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            background: #fff;
-            padding: 2rem;
-            border-radius: 8px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-            margin-top: 50px;
-        }
-        h1 {
-            text-align: center;
-            margin-bottom: 1.5rem;
-            color: #333;
-        }
-        .booking-details, .booking-card {
-            margin-bottom: 1.5rem;
-        }
-        .booking-details p {
-            margin-bottom: 0.75rem;
-            line-height: 1.6;
-            font-size: 1rem;
-            color: #555;
-        }
-        .label {
-            font-weight: bold;
-            color: #333;
-        }
-        .back-link {
-            display: block;
-            text-align: center;
-            margin-top: 2rem;
-            text-decoration: none;
-            font-size: 1rem;
-            color: #5563DE;
-            transition: color 0.3s ease;
-        }
-        .back-link:hover {
-            color: #444;
-        }
-        /* Styling for booking preview cards */
-        .booking-card {
-            background: #e8f0fe;
-            padding: 1rem;
-            border-radius: 6px;
-            margin-bottom: 1rem;
-            cursor: pointer;
-            transition: background 0.3s ease;
-        }
-        .booking-card:hover {
-            background: #d0e1fd;
-        }
-        .booking-info {
-            display: flex;
-            justify-content: space-between;
-        }
-        .booking-info span {
-            font-size: 1rem;
-            color: #333;
-        }
+/* Nav Links */
+.nav-links {
+    display: flex;
+    gap: 20px;
+}
+
+.nav-links a {
+    color: #ffffff;
+    font-size: 1rem;
+    font-weight: 600;
+    text-decoration: none;
+    padding: 10px 15px;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.nav-links a::after {
+    content: "";
+    display: block;
+    width: 0;
+    height: 3px;
+    background: #ffcc00;
+    position: absolute;
+    bottom: -5px;
+    left: 50%;
+    transform: translateX(-50%);
+    transition: width 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: #ffcc00;
+}
+
+.nav-links a:hover::after {
+    width: 100%;
+}
+
+/* Booking Container */
+.container {
+    max-width: 800px;
+    background: rgba(255, 255, 255, 0.95);
+    padding: 2rem;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+    margin: auto;
+    text-align: left;
+    margin-top: 100px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 1.5rem;
+}
+
+/* Booking Details */
+.booking-details p {
+    margin-bottom: 0.75rem;
+    line-height: 1.6;
+    font-size: 1rem;
+    color: #555;
+}
+
+.label {
+    font-weight: bold;
+    color: #333;
+}
+
+/* Booking Cards */
+.booking-card {
+    background: #e8f0fe;
+    padding: 1rem;
+    border-radius: 6px;
+    margin-bottom: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.booking-card:hover {
+    background: #d0e1fd;
+}
+
+.booking-info {
+    display: flex;
+    justify-content: space-between;
+}
+
+.booking-info span {
+    font-size: 1rem;
+    color: #333;
+}
+
+/* Button & Links */
+.back-link {
+    display: block;
+    text-align: center;
+    margin-top: 2rem;
+    text-decoration: none;
+    font-size: 1rem;
+    color: #ffcc00;
+    transition: color 0.3s ease;
+}
+
+.back-link:hover {
+    color: #e6b800;
+}
+
+/* Footer */
+footer {
+    background: rgba(0, 0, 0, 0.9);
+    padding: 15px;
+    text-align: center;
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+}
+
+footer p {
+    margin: 0;
+    color: #fff;
+}
     </style>
 </head>
 <body>
@@ -183,11 +178,10 @@
             <a href="booking.jsp">New Booking</a>
             <a href="BookingServlet?action=list">View Bookings</a>
             <a href="register.jsp">Registration</a>
-            <a href="viewEdt.jsp">View</a>
+            <a href="retrive.jsp">View</a>
             <a href="billing.jsp">Billing</a>
-            <a href="help.jsp">Help</a>
-            <a href="dashboard.jsp"></a>
-            <a href="index.jsp"></a>
+            <a href="guide.jsp">Guide</a>
+            <a href="dashboard.jsp">Home</a>
         </nav>
     </header>
  
@@ -207,11 +201,11 @@
         <h1>Bookings List</h1>
         <% for (Booking b : bookings) { %>
            
-            <a href="BookingServlet?bookingNumber=<%= b.getBookingNumber() %>" style="text-decoration:none;">
+            <a href="BookingServlet?bookingId=<%= b.getBookingId() %>" style="text-decoration:none;">
                 <div class="booking-card">
                     <div class="booking-info">
-                        <span><strong>Booking Number:</strong> <%= b.getBookingNumber() %></span>
-                        <span><strong>Customer Registration Number/NIC:</strong> <%= b.getCustomerRegNo() %></span>
+                        <span><strong>Booking Number:</strong> <%= b.getBookingId() %></span>
+                        <span><strong>Customer Registration Number/NIC:</strong> <%= b.getCustomerId() %></span>
                     </div>
                 </div>
             </a>
@@ -221,16 +215,16 @@
     %>
         <h1>Booking Details</h1>
         <div class="booking-details">
-            <p><span class="label">Booking Number:</span> <%= booking.getBookingNumber() %></p>
-            <p><span class="label">Customer Registration Number/NIC:</span> <%= booking.getCustomerRegNo() %></p>
+            <p><span class="label">Booking Number:</span> <%= booking.getBookingId() %></p>
+            <p><span class="label">Customer Registration Number/NIC:</span> <%= booking.getCustomerId() %></p>
             <p><span class="label">Customer Name:</span> <%= booking.getCustomerName() %></p>
-            <p><span class="label">Contact Number:</span> <%= booking.getTelephoneNumber() %></p>
+            <p><span class="label">Contact Number:</span> <%= booking.getTelephoneNo() %></p>
             <p><span class="label">Vehicle Type:</span> <%= booking.getVehicleType() %></p>
-            <p><span class="label">Assigned Vehicle Registration Number:</span> <%= booking.getVehicleRegId() %></p>
-            <p><span class="label">Vehicle Brand:</span> <%= booking.getVbrand() %></p>
-            <p><span class="label">Vehicle Model:</span> <%= booking.getVmodel() %></p>
-            <p><span class="label">Vehicle Seating Capacity:</span> <%= booking.getVseating() %></p>
-            <p><span class="label">Pickup Location:</span> <%= booking.getCustomerAddress() %></p>
+            <p><span class="label">Assigned Vehicle Registration Number:</span> <%= booking.getVehicleId() %></p>
+            <p><span class="label">Vehicle Brand:</span> <%= booking.getVehicleBrand() %></p>
+            <p><span class="label">Vehicle Model:</span> <%= booking.getVehicleModel() %></p>
+            <p><span class="label">Vehicle Seating Capacity:</span> <%= booking.getSeat() %></p>
+            <p><span class="label">Pickup Location:</span> <%= booking.getPickupLocation() %></p>
             <p><span class="label">Destination:</span> <%= booking.getDestination() %></p>
             <p>
             <span class="label">Booking Date:</span>
@@ -246,6 +240,7 @@
         }
     %>
     <a class="back-link" href="BookingServlet?action=list">Return to Back</a>
+    <a
 </div>
 </body>
 </html>

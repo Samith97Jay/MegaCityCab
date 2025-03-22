@@ -34,10 +34,40 @@ public class CustomerServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+
         String action = request.getParameter("action");
         if ("getCustomer".equalsIgnoreCase(action)) {
-            handleGetCustomer(request, response);
+            
+            String input = request.getParameter("custId");
+
+            Customer customer = null;
+            try {
+                // Now we look up by either registration number OR NIC:
+                customer = customerService.getCustomerByIdOrNic(input);
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(CustomerServlet.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+            // Return a JSON response
+            response.setContentType("application/json");
+            PrintWriter out = response.getWriter();
+
+            if (customer != null) {
+                // Manually build JSON (no external libraries)
+                String json = "{"
+                        + "\"name\":\"" + escapeJson(customer.getName()) + "\","
+                        + "\"phoneno\":\"" + escapeJson(customer.getPhoneno()) + "\""
+                        + "}";
+                out.write(json);
+            } else {
+                // If customer not found, return empty object
+                out.write("{}");
+            }
+            out.flush();
         } else {
+            // If action not recognized, send HTTP 400
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Invalid action.");
         }
     }
@@ -85,32 +115,12 @@ public class CustomerServlet extends HttpServlet {
     /**
      * Handles customer retrieval based on ID or NIC.
      */
-    private void handleGetCustomer(HttpServletRequest request, HttpServletResponse response)
-            throws IOException {
-        String input = request.getParameter("custId");
+   
 
-        if (input == null || input.trim().isEmpty()) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, "Customer ID or NIC is required.");
-            return;
+  private String escapeJson(String value) {
+        if (value == null) {
+            return "";
         }
-
-        try {
-            Customer customer = customerService.fetchCustomerByIdOrNic(input);
-            response.setContentType("application/json");
-            response.setCharacterEncoding("UTF-8");
-
-            JSONObject jsonResponse = new JSONObject();
-            if (customer != null) {
-                jsonResponse.put("name", customer.getName());
-                jsonResponse.put("phoneno", customer.getPhoneno());
-            }
-
-            PrintWriter out = response.getWriter();
-            out.write(jsonResponse.toString());
-            out.flush();
-        } catch (SQLException | ClassNotFoundException ex) {
-            LOGGER.log(Level.SEVERE, "Error fetching customer", ex);
-            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "Error retrieving customer data.");
-        }
+        return value.replace("\"", "\\\"");
     }
 }

@@ -85,12 +85,14 @@ private final CustomerDAO customerDAO;
      * @return the Customer object if found, otherwise null.
      * @throws SQLException, ClassNotFoundException if a database error occurs.
      */
-    public Customer fetchCustomerByIdOrNic(String input) throws SQLException, ClassNotFoundException {
+    public Customer getCustomerByIdOrNic(String input) throws SQLException, ClassNotFoundException {
         if (input == null || input.trim().isEmpty()) {
             throw new IllegalArgumentException("Input (Customer ID/NIC) cannot be null/empty.");
         }
         return customerDAO.fetchCustomerByIdOrNic(input);
     }
+    
+    
 
     /**
      * Updates an existing customer in the database.

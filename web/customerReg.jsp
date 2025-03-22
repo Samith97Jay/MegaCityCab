@@ -38,7 +38,7 @@
     String timestamp = sdf.format(new Date());
 
     // Generate Customer ID (combining incrementing number and timestamp)
-    String custId = "CUS" + timestamp + "_" + newId ;
+    String custId = "CU" + timestamp + "_" + newId ;
 %>
 
 <html>
@@ -215,12 +215,11 @@
         <nav class="nav-links">
             <a href="booking.jsp">New Booking</a>
             <a href="BookingServlet?action=list">View Bookings</a>
-            <a href="customerReg.jsp">Customer Registration</a>
-            <a href="retrive.jsp">View Customers</a>
+            <a href="register.jsp">Registration</a>
+            <a href="retrive.jsp">View</a>
             <a href="billing.jsp">Billing</a>
-            <a href="help.jsp">Help</a>
-            <a href="dashboard.jsp">Dashboard</a>
-            <a href="index.jsp">Home</a>
+            <a href="guide.jsp">Guide</a>
+            <a href="dashboard.jsp">Home</a>
         </nav>
     </header>
     
@@ -241,7 +240,7 @@
         <form action="CustomerServlet" method="post" id="autoSubmitForm">
             <!-- Auto-generated Customer ID -->
           <label for="custId" id="custIdLabel" style="display: none;">Customer ID</label>
-<input type="text" id="custId" name="custIdDisplay" value="<%=custId%>" readonly style="display: none;">
+<input type="text" id="custId" name="custId" value="<%=custId%>" readonly style="display: none;">
 <input type="hidden" name="custId" value="<%=custId%>">
 
 <script>

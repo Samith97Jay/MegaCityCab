@@ -85,15 +85,18 @@ public class CustomerDAO {
         }
     }
 
-    public boolean deleteCustomer(String custId) throws SQLException, ClassNotFoundException {
-        String sql = "DELETE FROM customers WHERE custId = ?";
-
-        try (Connection conn = DBConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
-            stmt.setString(1, custId);
-            return stmt.executeUpdate() > 0;
-        }
+   public boolean deleteCustomer(String custId) throws SQLException, ClassNotFoundException {
+    String sql = "DELETE FROM customers WHERE custId = ?";
+    try (Connection conn = DBConnection.getConnection();
+         PreparedStatement stmt = conn.prepareStatement(sql)) {
+        stmt.setString(1, custId);
+        int rowsAffected = stmt.executeUpdate();
+        return rowsAffected > 0; // Returns true if deletion was successful
+    } catch (SQLException e) {
+        e.printStackTrace();
     }
+    return false;
+}
 
     public List<Customer> fetchAllCustomers() throws SQLException, ClassNotFoundException {
         List<Customer> customers = new ArrayList<>();
@@ -184,6 +187,7 @@ public class CustomerDAO {
     private boolean isValidPhoneNo(String phoneno) {
         return Pattern.matches("^(\\+94\\d{9}|\\d{10})$", phoneno);
     }
+
 }
   
 

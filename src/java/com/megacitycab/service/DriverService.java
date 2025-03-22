@@ -33,4 +33,18 @@ public class DriverService {
         return driverDAO.insertDriver(driver);
     }
     
+    
+    public Driver getDriverById(String driverId) throws Exception {
+        return driverDAO.getDriver(driverId);
+    }
+    
+  
+    public boolean updateDriver(Driver driver) throws Exception {
+        return driverDAO.updateDriver(driver);
+    }
+    
+    public boolean deleteDriver(String driverId) throws SQLException, ClassNotFoundException {
+        return driverDAO.deleteDriver(driverId);
+    }
+    
 }
