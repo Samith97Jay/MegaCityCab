@@ -252,6 +252,11 @@ footer p {
                         
                         <button type="submit">Update Customer Details</button>
                     </form>
+                         <form action="RetrivalServlet" method="post" onsubmit="return confirm('Are you sure you want to delete this customer account?');">
+                            <input type="hidden" name="custId" value="<%= customer.getCustId() %>" />
+                            <input type="hidden" name="deleteCustomer" value="true" />
+                            <button type="submit">Delete Customer Account</button>
+                        </form>
                         
                         
                 </div>
@@ -283,7 +288,11 @@ footer p {
                         <button type="submit">Update Driver Details</button>
                     </form>
                         
-                        
+                        <form action="RetrivalServlet" method="post" onsubmit="return confirm('Are you sure you want to delete this driver account?');">
+                            <input type="hidden" name="driverId" value="<%= driver.getDriverId() %>" />
+                            <input type="hidden" name="deleteDriver" value="true" />
+                            <button type="submit">Delete Customer Account</button>
+                        </form>
                 </div>
     <%
             } else if(recordType.equals("vehicle")) {
@@ -315,6 +324,14 @@ footer p {
                         
                         <button type="submit">Update Vehicle Details</button>
                     </form>
+                          <form action="RetrivalSeervlet" method="post" onsubmit="return confirm('Are you sure you want to remove this vehicle?');">
+                            <input type="hidden" name="vehicleId" value="<%= vehicle.getVehicleId() %>" />
+                            <input type="hidden" name="deleteVehicle" value="true" />
+                            <button type="submit">Remove Vehicle</button>
+                        </form>
+                        
+                        
+                        
                 </div>
     <%
             }
