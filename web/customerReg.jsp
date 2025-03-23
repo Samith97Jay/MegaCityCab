@@ -215,7 +215,7 @@
         <nav class="nav-links">
             <a href="booking.jsp">New Booking</a>
             <a href="BookingServlet?action=list">View Bookings</a>
-            <a href="register.jsp">Registration</a>
+            
             <a href="retrive.jsp">View</a>
             <a href="billing.jsp">Billing</a>
             <a href="guide.jsp">Guide</a>
