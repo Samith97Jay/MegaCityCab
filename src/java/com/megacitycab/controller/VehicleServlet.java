@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.megacitycab.controller;
 
 import com.megacitycab.model.Vehicle;
@@ -18,12 +13,10 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-
 @WebServlet("/VehicleServlet")
 public class VehicleServlet extends HttpServlet {
 
-  private VehicleService vehicleService;
-    private int seat;
+    private VehicleService vehicleService;
 
     @Override
     public void init() throws ServletException {
@@ -37,89 +30,77 @@ public class VehicleServlet extends HttpServlet {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
 
-        PrintWriter out = response.getWriter();
-        try {
+        try (PrintWriter out = response.getWriter()) {
             if ("getAvailableNotBookedVehicle".equalsIgnoreCase(action)) {
-                String vehicleType = request.getParameter("vehicleType");
-                Vehicle vehicle = vehicleService.getAvailableNotBookedVehicle(vehicleType);
-                if (vehicle != null) {
-                    // Build a JSON response with vehicle details
-                    StringBuilder json = new StringBuilder();
-                    json.append("{");
-                    json.append("\"vehicleType\":\"").append(vehicle.getVehicleType()).append("\",");
-                    json.append("\"vehicleId\":\"").append(vehicle.getVehicleId()).append("\",");
-                    json.append("\"lisce\":\"").append(vehicle.getLisce()).append("\",");
-                    json.append("\"vehicleModel\":\"").append(vehicle.getVehicleModel()).append("\",");
-                    json.append("\"vehicleBrand\":\"").append(vehicle.getVehicleBrand()).append("\",");
-                    json.append("\"color\":\"").append(vehicle.getColor()).append("\",");
-                    json.append("\"seat\":").append(vehicle.getSeat());
-                    json.append("}");
-                    out.write(json.toString());
-                } else {
-                    // Return a JSON message if no available vehicle is found
-                    out.write("{\"message\":\"All vehicles are booked\"}");
-                }
+                handleGetAvailableNotBookedVehicle(request, out);
             } else if ("getAvailableVehicle".equalsIgnoreCase(action)) {
-                String vehicleType = request.getParameter("vehicleType");
-                Vehicle vehicle = vehicleService.getAvailableVehicle(vehicleType);
-                if (vehicle != null) {
-                    StringBuilder json = new StringBuilder();
-                    json.append("{");
-                    json.append("\"vehicleType\":\"").append(vehicle.getVehicleType()).append("\",");
-                    json.append("\"vehicleId\":\"").append(vehicle.getVehicleId()).append("\",");
-                    json.append("\"lisce\":\"").append(vehicle.getLisce()).append("\",");
-                    json.append("\"vehicleModel\":\"").append(vehicle.getVehicleModel()).append("\",");
-                    json.append("\"vehicleBrand\":\"").append(vehicle.getVehicleBrand()).append("\",");
-                    json.append("\"color\":\"").append(vehicle.getColor()).append("\",");
-                    json.append("\"seat\":").append(vehicle.getSeat());
-                    json.append("}");
-                    out.write(json.toString());
-                } else {
-                    out.write("{}");
-                }
+                handleGetAvailableVehicle(request, out);
             } else {
                 out.write("{\"error\":\"Invalid action\"}");
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            out.write("{\"error\":\"" + e.getMessage() + "\"}");
-        } finally {
-            out.flush();
-            out.close();
         }
     }
-    
+
+    private void handleGetAvailableNotBookedVehicle(HttpServletRequest request, PrintWriter out) {
+        try {
+            String vehicleType = request.getParameter("vehicleType");
+            Vehicle vehicle = vehicleService.getAvailableNotBookedVehicle(vehicleType);
+            out.write(vehicle != null ? buildVehicleJson(vehicle) : "{\"message\":\"All vehicles are booked\"}");
+        } catch (Exception e) {
+            Logger.getLogger(VehicleServlet.class.getName()).log(Level.SEVERE, "Error fetching vehicle", e);
+            out.write("{\"error\":\"" + e.getMessage() + "\"}");
+        }
+    }
+
+    private void handleGetAvailableVehicle(HttpServletRequest request, PrintWriter out) {
+        try {
+            String vehicleType = request.getParameter("vehicleType");
+            Vehicle vehicle = vehicleService.getAvailableVehicle(vehicleType);
+            out.write(vehicle != null ? buildVehicleJson(vehicle) : "{}" );
+        } catch (Exception e) {
+            Logger.getLogger(VehicleServlet.class.getName()).log(Level.SEVERE, "Error fetching vehicle", e);
+            out.write("{\"error\":\"" + e.getMessage() + "\"}");
+        }
+    }
+
+    private String buildVehicleJson(Vehicle vehicle) {
+        return "{" +
+                "\"vehicleType\":\"" + vehicle.getVehicleType() + "\"," +
+                "\"vehicleId\":\"" + vehicle.getVehicleId() + "\"," +
+                "\"lisce\":\"" + vehicle.getLisce() + "\"," +
+                "\"vehicleModel\":\"" + vehicle.getVehicleModel() + "\"," +
+                "\"vehicleBrand\":\"" + vehicle.getVehicleBrand() + "\"," +
+                "\"color\":\"" + vehicle.getColor() + "\"," +
+                "\"seat\":" + vehicle.getSeat() +
+                "}";
+    }
+
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        // Retrieve parameters from the form
         String vehicleType = request.getParameter("vehicleType");
         String vehicleId = request.getParameter("vehicleId");
         String lisce = request.getParameter("lisce");
         String vehicleModel = request.getParameter("vehicleModel");
         String vehicleBrand = request.getParameter("vehicleBrand");
         String color = request.getParameter("color");
-        int seat = 0;
+        int seat = parseSeat(request.getParameter("seat"));
+
         try {
-            seat= Integer.parseInt(request.getParameter("seat"));
-        } catch (NumberFormatException e) {
-            // Handle if seatingCapacity is not provided or is invalid
+            boolean isRegistered = vehicleService.registerVehicle(vehicleType, vehicleId, lisce, vehicleModel, vehicleBrand, color, seat);
+            request.setAttribute(isRegistered ? "message" : "errorMessage", isRegistered ? "Vehicle registered successfully with Registration ID: " + vehicleId : "Vehicle registration failed. Please try again.");
+        } catch (ClassNotFoundException | SQLException ex) {
+            Logger.getLogger(VehicleServlet.class.getName()).log(Level.SEVERE, "Error registering vehicle", ex);
+            request.setAttribute("errorMessage", "An error occurred while registering the vehicle.");
         }
 
-        // Call service to register the vehicle
-        boolean isRegistered = false;
-      try {
-          isRegistered = vehicleService.registerVehicle(vehicleType, vehicleId, lisce, vehicleModel, vehicleBrand, color, seat);
-      } catch (ClassNotFoundException ex) {
-          Logger.getLogger(VehicleServlet.class.getName()).log(Level.SEVERE, null, ex);
-      } catch (SQLException ex) {
-          Logger.getLogger(VehicleServlet.class.getName()).log(Level.SEVERE, null, ex);
-      }
-
-        if(isRegistered){
-            request.setAttribute("message", "Vehicle registered successfully with Registration ID: " + vehicleId);
-        } else {
-            request.setAttribute("errorMessage", "Vehicle registration failed. Please try again.");
-        }
         request.getRequestDispatcher("vehicleReg.jsp").forward(request, response);
+    }
+
+    private int parseSeat(String seatParam) {
+        try {
+            return Integer.parseInt(seatParam);
+        } catch (NumberFormatException e) {
+            return 0;
+        }
     }
 }

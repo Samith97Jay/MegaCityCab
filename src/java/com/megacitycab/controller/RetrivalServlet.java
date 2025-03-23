@@ -147,10 +147,10 @@ public class RetrivalServlet extends HttpServlet {
             } else if (request.getParameter("driverId") != null && !request.getParameter("driverId").isEmpty()) {
                 // Update Driver record
                 String driverId = request.getParameter("driverId");
-                String driverName = request.getParameter("driverName");
+                String driverName = request.getParameter("name");
                 String lisce = request.getParameter("lisce");
                 String phoneno = request.getParameter("phone");
-                String driverAddress = request.getParameter("driverAddress");
+                String driverAddress = request.getParameter("address");
                 String assignedVehicleId = request.getParameter("assignedVehicleId");
 
                 Driver updatedDriver = new Driver.Builder(driverId)
