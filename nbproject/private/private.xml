@@ -3,36 +3,26 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/src/java/com/megacitycab/controller/RetrivalServlet.java</file>
-            <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/src/java/com/megacitycab/service/AuthService.java</file>
-            <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/test/BookingTesting.java</file>
-            <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/src/java/com/megacitycab/controller/DriverServlet.java</file>
-            <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/src/java/com/megacitycab/dao/AdminDAO.java</file>
-            <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/src/java/com/megacitycab/service/BillingService.java</file>
+            <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/web/retrive.jsp</file>
+            <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/web/index.jsp</file>
+            <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/src/java/com/megacitycab/controller/VehicleServlet.java</file>
             <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/src/java/com/megacitycab/service/DriverService.java</file>
             <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/web/customerReg.jsp</file>
             <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/web/driverReg.jsp</file>
-            <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/src/java/com/megacitycab/controller/SigninServlet.java</file>
-            <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/src/java/com/megacitycab/model/Vehicle.java</file>
-            <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/test/AdminLoginTest/UserTest.java</file>
-            <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/src/java/com/megacitycab/model/Customer.java</file>
-            <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/src/java/com/megacitycab/model/Driver.java</file>
-            <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/src/java/com/megacitycab/util/DBConnection.java</file>
-            <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/src/java/com/megacitycab/dao/DriverDAO.java</file>
-            <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/src/java/com/megacitycab/service/CustomerService.java</file>
-            <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/src/java/com/megacitycab/service/RetrivalService.java</file>
-            <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/src/java/com/megacitycab/dao/BookingDAO.java</file>
-            <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/web/retrive.jsp</file>
-            <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/src/java/com/megacitycab/controller/VehicleServlet.java</file>
-            <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/src/java/com/megacitycab/dao/VehicleDAO.java</file>
             <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/src/java/com/megacitycab/model/Booking.java</file>
-            <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/src/java/com/megacitycab/controller/CustomerServlet.java</file>
+            <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/web/booking.jsp</file>
+            <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/web/billing.jsp</file>
             <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/web/dashboard.jsp</file>
+            <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/src/java/com/megacitycab/model/Vehicle.java</file>
+            <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/web/guide.jsp</file>
+            <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/src/java/com/megacitycab/model/Customer.java</file>
             <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/web/vehicleReg.jsp</file>
+            <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/src/java/com/megacitycab/model/Driver.java</file>
+            <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/test/BookingTest/BookingDAOTest.java</file>
             <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/src/java/com/megacitycab/service/VehicleService.java</file>
-            <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/src/java/com/megacitycab/controller/BookingServlet.java</file>
-            <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/test/CustomerServiceTest.java</file>
-            <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/src/java/com/megacitycab/dao/CustomerDAO.java</file>
+            <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/src/java/com/megacitycab/util/DBConnection.java</file>
+            <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/src/java/com/megacitycab/service/RetrivalService.java</file>
+            <file>file:/D:/OZT00090/My%20Documents/NetBeansProjects/MegaCityCab-Service/web/viewbookings.jsp</file>
         </group>
     </open-files>
 </project-private>

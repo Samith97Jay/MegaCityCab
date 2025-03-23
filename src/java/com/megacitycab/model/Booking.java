@@ -139,6 +139,10 @@ public class Booking {
         return Objects.equals(bookingId, other.bookingId);
     }
 
+    public Object getBookingNumber() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     public static class Builder {
         private final String bookingId;
         private String customerName;
@@ -226,5 +230,11 @@ public class Booking {
         public Booking build() {
             return new Booking(this);
         }
+
+        public Object vbrand(String brand) {
+            throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        }
+
+       
     }
 }
